@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   ReactFlow,
   Controls,
@@ -9,30 +9,34 @@ import {
 import '@xyflow/react/dist/style.css';
 
 import EmployeeCard from './EmloyeeCard';
-const nodeTypes = { employeeCard : EmployeeCard }
+import createNodeArray from '../utils/createNodes';
 
-const initialNodes = [
-  {
-    id: '1',
-    data: { employee: { 'Name': 'Imran Rehman'} },
-    position: { x: 0, y: 0 },
-    type: 'employeeCard',
-  },
-  {
-    id: '2',
-    data: { employee: { 'Name': 'Imran Rehman 2'} },
-    position: { x: 0, y: 300 },
-    type: 'employeeCard',
-  },
-];
+const nodeTypes = { employeeCard: EmployeeCard };
 
-const initialEdges = [
-  { id: '1-2', source: '1', target: '2', label: 'to the', type: 'step' },
-];
+const Flow = ({ treeHead }) => {
+  const [nodes, setNodes] = useState([]);
+  const [edges, setEdges] = useState([]);
 
-function Flow() {
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  useEffect(() => {
+    if (treeHead) {
+      const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0, 0);
+      setNodes(newNodes);
+      setEdges(newEdges);
+    }
+  }, [treeHead]); // Only re-run effect if treeHead changes
+
+  const expandEmployee = () => {
+    console.log('expand employee with id=1');
+    
+    if (treeHead && treeHead.children && treeHead.children.length > 0) {
+      //find node in nodes array with id=1 
+      const node = nodes.find((n) => n.id === '1');
+      console.log('node', node);
+      const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead.children[0], node.position.x, node.position.y);
+      setNodes((currentNodes) => [...currentNodes, ...newNodes]);
+      setEdges((currentEdges) => [...currentEdges, ...newEdges]);
+    }
+  };
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -56,8 +60,11 @@ function Flow() {
         <Background />
         <Controls />
       </ReactFlow>
+      <button onClick={expandEmployee}>
+        Expand employee with id=1
+      </button>
     </div>
   );
-}
+};
 
 export default Flow;

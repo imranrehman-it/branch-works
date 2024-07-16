@@ -5,12 +5,12 @@ import Flow from './components/Flow';
 
 const App = () => {
   const { data, loading, error } = useFetchEmployees();
-  const [employees, setEmployees] = useState(null);
+  const [treeHead, setTreeHead] = useState(null);
 
   useEffect(() => {
     if (data) {
       console.log(data);
-      setEmployees(data);
+      setTreeHead(data);
     }
   }, [data]);
 
@@ -22,9 +22,9 @@ const App = () => {
 
       {error && <p>Error: {error.message}</p>}
 
-      {employees && <p>{employees['Name']}</p>}
+      {treeHead && <p>{treeHead['Name']}</p>}
 
-      <Flow />
+      <Flow treeHead={treeHead} />
 
     </div>
   );
