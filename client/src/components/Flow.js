@@ -19,8 +19,14 @@ const Flow = ({ treeHead }) => {
 
   useEffect(() => {
     if (treeHead) {
+      setNodes([{
+        id: "0",
+        data: { employee: treeHead },
+        position: { x: 0, y: 0 },
+        type: 'employeeCard',
+      }]);
       const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0, 0);
-      setNodes(newNodes);
+      setNodes((currentNodes) => [...currentNodes, ...newNodes]);
       setEdges(newEdges);
     }
   }, [treeHead]); // Only re-run effect if treeHead changes
@@ -30,9 +36,9 @@ const Flow = ({ treeHead }) => {
     
     if (treeHead && treeHead.children && treeHead.children.length > 0) {
       //find node in nodes array with id=1 
-      const node = nodes.find((n) => n.id === '1');
+      const node = nodes.find((n) => n.id === '2');
       console.log('node', node);
-      const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead.children[0], node.position.x, node.position.y);
+      const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead.children[1], node.position.x+125, node.position.y);
       setNodes((currentNodes) => [...currentNodes, ...newNodes]);
       setEdges((currentEdges) => [...currentEdges, ...newEdges]);
     }
@@ -48,7 +54,7 @@ const Flow = ({ treeHead }) => {
   );
 
   return (
-    <div style={{ height: '50%' }}>
+    <div style={{ height: '90%' }}>
       <ReactFlow
         nodes={nodes}
         onNodesChange={onNodesChange}

@@ -26,7 +26,7 @@ const createNodeArray = (treeHead, posX, posY) => {
   let edges = [];
   const { x, y } = { x: posX, y: posY };
 
-  nodes.push({ id: treeHead['Employee Id'].toString(), data: { employee: treeHead }, position: { x, y }, type: 'employeeCard', hidden: false });
+//   nodes.push({ id: treeHead['Employee Id'].toString(), data: { employee: treeHead }, position: { x, y }, type: 'employeeCard', hidden: false });
 
   createNodes(treeHead, x, y, nodes, edges);
 
