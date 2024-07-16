@@ -1,22 +1,35 @@
-import React, { useEffect} from 'react';
+import React, { useEffect, useState} from 'react';
 import { Handle, Position } from '@xyflow/react';
 import { useGlobalState } from '../utils/GlobalStateContext';
 import createNodeArray from '../utils/createNodes';
+import removeNodes from '../utils/removeNodes';
+
 
 const EmployeeCard = ({isConnectable, data}) => {
     const { nodes, setNodes, edges, setEdges } = useGlobalState();
+    const [expanded, setExpanded] = useState(false);
 
     const expandEmployee = () => {
         console.log('expand employee with id=1');
-        
-        if (data.employee && data.employee && data.employee['children'].length > 0) {
-          //find node in nodes array with id=1 
-          const node = nodes.find((n) => n.id === data.employee['Employee Id'].toString());
-          console.log('node', node);
-          const { nodes: newNodes, edges: newEdges } = createNodeArray(data.employee, node.position.x+125, node.position.y);
-          setNodes((currentNodes) => [...currentNodes, ...newNodes]);
-          setEdges((currentEdges) => [...currentEdges, ...newEdges]);
+        if (expanded) {
+            setExpanded(false);
+            const currentNodes = [...nodes];
+            const newNodes = removeNodes(data.employee, currentNodes);
+            console.log('newNodes', newNodes);
+            setNodes(newNodes);
         }
+        else{
+            if (data.employee && data.employee && data.employee['children'].length > 0) {
+                setExpanded(true);
+              //find node in nodes array with id=1 
+              const node = nodes.find((n) => n.id === data.employee['Employee Id'].toString());
+              console.log('node', node);
+              const { nodes: newNodes, edges: newEdges } = createNodeArray(data.employee, node.position.x+125, node.position.y);
+              setNodes((currentNodes) => [...currentNodes, ...newNodes]);
+              setEdges((currentEdges) => [...currentEdges, ...newEdges]);
+            }
+        }
+       
       };
     
 
