@@ -14,7 +14,7 @@ app.use(cors());
 
 // Route to fetch all employees
 app.get('/employees', async (req, res) => {
-  console.log('Fetching all employees');
+  console.log('Hit endpoint /employees');
   try {
     const result = await buildTree()
     
