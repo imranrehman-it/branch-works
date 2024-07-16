@@ -5,11 +5,10 @@ const createNodes = (parent, posX, posY, nodes, edges) => {
     parent['children'].forEach((child, index) => {
       const { x, y } = calculateNewPosition(posX, posY, parent['children'].length, index);
       
-      if (child['level'] > 3) {
-        nodes.push({ id: child['Employee Id'].toString(), data: { employee: child }, position: { x, y }, type: 'employeeCard', hidden: true });
-      } else {
-        nodes.push({ id: child['Employee Id'].toString(), data: { employee: child }, position: { x, y }, type: 'employeeCard', hidden: false });
-      }
+      
+      nodes.push({ id: child['Employee Id'].toString(), data: { employee: child }, position: { x, y }, type: 'employeeCard', hidden: false });
+  
+ 
 
       edges.push({ id: `${parent['Employee Id']}-${child['Employee Id']}`, source: parent['Employee Id'].toString(), target: child['Employee Id'].toString() , type: 'smoothstep' });
 

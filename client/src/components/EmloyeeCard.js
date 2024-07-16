@@ -1,8 +1,24 @@
 import React, { useEffect} from 'react';
 import { Handle, Position } from '@xyflow/react';
+import { useGlobalState } from '../utils/GlobalStateContext';
+import createNodeArray from '../utils/createNodes';
 
 const EmployeeCard = ({isConnectable, data}) => {
+    const { nodes, setNodes, edges, setEdges } = useGlobalState();
 
+    const expandEmployee = () => {
+        console.log('expand employee with id=1');
+        
+        if (data.employee && data.employee && data.employee['children'].length > 0) {
+          //find node in nodes array with id=1 
+          const node = nodes.find((n) => n.id === data.employee['Employee Id'].toString());
+          console.log('node', node);
+          const { nodes: newNodes, edges: newEdges } = createNodeArray(data.employee, node.position.x+125, node.position.y);
+          setNodes((currentNodes) => [...currentNodes, ...newNodes]);
+          setEdges((currentEdges) => [...currentEdges, ...newEdges]);
+        }
+      };
+    
 
   useEffect(() => {
   }, [data]);
@@ -10,7 +26,7 @@ const EmployeeCard = ({isConnectable, data}) => {
   return (
     <>
      <Handle type="target" position={Position.Top} />
-    <div className={`flex flex-col w-[15rem] h-[16rem] bg-white shadow-md rounded-md p-4 items-center`}>
+    <div onClick={expandEmployee} className={`flex flex-col w-[15rem] h-[16rem] bg-white shadow-md rounded-md p-4 items-center`}>
       <div className='header flex flex-col items-center'>
         <p className='text-white text-center text-lg justify-around p-1 font-bold w-10 h-10 bg-black rounded-full absolute -translate-y-8'>IR</p>
         <h1 className='text-black text-nowrap text-left text-lg font-semibold mt-3'>{data.employee['Name']}</h1>

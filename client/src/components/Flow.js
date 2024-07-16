@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { useGlobalState } from '../utils/GlobalStateContext';
 import {
   ReactFlow,
   Controls,
@@ -14,43 +15,34 @@ import createNodeArray from '../utils/createNodes';
 const nodeTypes = { employeeCard: EmployeeCard };
 
 const Flow = ({ treeHead }) => {
-  const [nodes, setNodes] = useState([]);
-  const [edges, setEdges] = useState([]);
+  const { nodes, setNodes, edges, setEdges } = useGlobalState();
+  console.log('nodes', nodes);
+    console.log('edges', edges);
 
-  useEffect(() => {
-    if (treeHead) {
-      setNodes([{
-        id: "0",
-        data: { employee: treeHead },
-        position: { x: 0, y: 0 },
-        type: 'employeeCard',
-      }]);
-      const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0, 0);
-      setNodes((currentNodes) => [...currentNodes, ...newNodes]);
-      setEdges(newEdges);
-    }
-  }, [treeHead]); // Only re-run effect if treeHead changes
-
-  const expandEmployee = () => {
-    console.log('expand employee with id=1');
-    
-    if (treeHead && treeHead.children && treeHead.children.length > 0) {
-      //find node in nodes array with id=1 
-      const node = nodes.find((n) => n.id === '2');
-      console.log('node', node);
-      const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead.children[1], node.position.x+125, node.position.y);
-      setNodes((currentNodes) => [...currentNodes, ...newNodes]);
-      setEdges((currentEdges) => [...currentEdges, ...newEdges]);
-    }
-  };
+    useEffect(() => {
+        if (treeHead) {
+          const initialNode = {
+            id: "0",
+            data: { employee: treeHead },
+            position: { x: 0, y: 0 },
+            type: 'employeeCard',
+          };
+          setNodes([initialNode]);
+          const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0, 0);
+          setNodes((currentNodes) => [...currentNodes, ...newNodes]);
+          setEdges(newEdges);
+        }
+      }, [treeHead]);
+      
 
   const onNodesChange = useCallback(
-    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    [],
+    (changes) => setNodes((currentNodes) => applyNodeChanges(changes, currentNodes)),
+    [setNodes],
   );
+
   const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    [],
+    (changes) => setEdges((currentEdges) => applyEdgeChanges(changes, currentEdges)),
+    [setEdges],
   );
 
   return (
@@ -66,9 +58,6 @@ const Flow = ({ treeHead }) => {
         <Background />
         <Controls />
       </ReactFlow>
-      <button onClick={expandEmployee}>
-        Expand employee with id=1
-      </button>
     </div>
   );
 };
