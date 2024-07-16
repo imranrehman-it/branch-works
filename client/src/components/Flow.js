@@ -8,17 +8,21 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
+import EmployeeCard from './EmloyeeCard';
+const nodeTypes = { employeeCard : EmployeeCard }
+
 const initialNodes = [
   {
     id: '1',
-    data: { label: 'Hello' },
+    data: { employee: { 'Name': 'Imran Rehman'} },
     position: { x: 0, y: 0 },
-    type: 'input',
+    type: 'employeeCard',
   },
   {
     id: '2',
-    data: { label: 'World' },
-    position: { x: 100, y: 100 },
+    data: { employee: { 'Name': 'Imran Rehman 2'} },
+    position: { x: 0, y: 300 },
+    type: 'employeeCard',
   },
 ];
 
@@ -46,6 +50,7 @@ function Flow() {
         onNodesChange={onNodesChange}
         edges={edges}
         onEdgesChange={onEdgesChange}
+        nodeTypes={nodeTypes}
         fitView
       >
         <Background />

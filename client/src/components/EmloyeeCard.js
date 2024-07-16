@@ -1,19 +1,19 @@
 import React, { useEffect} from 'react';
+import { Handle, Position } from '@xyflow/react';
 
-
-const EmployeeCard = (employee) => {
+const EmployeeCard = ({isConnectable, data}) => {
 
 
   useEffect(() => {
-    console.log(employee);
-  }, [employee]);
+  }, [data]);
 
   return (
     <>
-    <div className={`flex flex-col w-52 h-80 shadow-md rounded-md p-4 items-center`}>
+     <Handle type="target" position={Position.Top} />
+    <div className={`flex flex-col w-[15rem] h-[16rem] bg-white shadow-md rounded-md p-4 items-center`}>
       <div className='header flex flex-col items-center'>
         <p className='text-white text-center text-lg justify-around p-1 font-bold w-10 h-10 bg-black rounded-full absolute -translate-y-8'>IR</p>
-        <h1 className='text-black text-nowrap text-left text-lg font-semibold mt-3'>Imran Rehman</h1>
+        <h1 className='text-black text-nowrap text-left text-lg font-semibold mt-3'>{data.employee['Name']}</h1>
         <p className='text-black text-nowrap text-left text-sm'>CEO</p>
         <p className='bg-white w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold text-nowrap mt-1 shadow-inner'>Engineering</p>
       </div>
@@ -30,6 +30,13 @@ const EmployeeCard = (employee) => {
       </div>
       <p className='bg-yellow-200 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap mt-2'>5</p>
     </div>
+    <Handle type="source" position={Position.Bottom} id="a" />
+    <Handle
+        type="source"
+        position={Position.Bottom}
+        id="b"
+        isConnectable='true'
+      />
     </>
   );
 };
