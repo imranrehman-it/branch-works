@@ -15,24 +15,25 @@ import createNodeArray from '../utils/createNodes';
 const nodeTypes = { employeeCard: EmployeeCard };
 
 const Flow = ({ treeHead }) => {
+
   const { nodes, setNodes, edges, setEdges } = useGlobalState();
 
-    useEffect(() => {
-        if (treeHead) {
-          const initialNode = {
-            id: "0",
-            data: { employee: treeHead },
-            position: { x: 0, y: 0 },
-            type: 'employeeCard',
-          };
-          setNodes([initialNode]);
-          const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0 , 0);
-          setNodes((currentNodes) => [...currentNodes, ...newNodes]);
-          setEdges(newEdges);
-        }
-      }, [treeHead]);
+  useEffect(() => {
+      if (treeHead) {
+        const initialNode = {
+          id: "0",
+          data: { employee: treeHead },
+          position: { x: 0, y: 0 },
+          type: 'employeeCard',
+        };
+        setNodes([initialNode]);
+        const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0 , 0);
+        setNodes((currentNodes) => [...currentNodes, ...newNodes]);
+        setEdges(newEdges);
+      }
+    }, [treeHead]);
       
-
+    
   const onNodesChange = useCallback(
     (changes) => setNodes((currentNodes) => applyNodeChanges(changes, currentNodes)),
     [setNodes],
