@@ -10,7 +10,7 @@ const createNodes = (parent, posX, posY, nodes, edges) => {
   
  
 
-      edges.push({ id: `${parent['Employee Id']}-${child['Employee Id']}`, source: parent['Employee Id'].toString(), target: child['Employee Id'].toString() , type: 'animated' });
+      edges.push({ id: `${parent['Employee Id']}-${child['Employee Id']}`, source: parent['Employee Id'].toString(), target: child['Employee Id'].toString() , animated: true });
 
     });
   }
