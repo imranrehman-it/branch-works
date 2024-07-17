@@ -12,8 +12,6 @@ const removeNodes = (treeHead, nodes, edges) => {
       {
         nodes = nodes?.filter((node) => node.id !== treeHead['Employee Id'].toString());
         edges = edges.filter((edge) => !edge.id.startsWith(`${treeHead['Employee Id']}-`));
-
-        console.log('removing node', treeHead['Name']);
       }
     return { nodes, edges };
   };

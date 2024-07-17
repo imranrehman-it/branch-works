@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 // Create a context object
 const GlobalStateContext = createContext();
@@ -9,6 +9,12 @@ export const GlobalStateProvider = ({ children }) => {
   const [edges, setEdges] = useState([]);
   const [expandedNodes, setExpandedNodes] = useState({});
 
+
+  useEffect(()=>{
+    console.log('nodes has been expanded');
+  }, [expandedNodes])
+
+
   return (
     <GlobalStateContext.Provider
       value={{ nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes }}
@@ -18,7 +24,7 @@ export const GlobalStateProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the global state
+// Custom hook to use the global statex
 export const useGlobalState = () => {
   const context = useContext(GlobalStateContext);
   if (!context) {

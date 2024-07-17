@@ -11,47 +11,51 @@ const EmployeeCard = ({isConnectable, data}) => {
     const [expanded, setExpanded] = useState(false);
 
 
-        
+    const expandNode = () => {
+      if (data.employee && data.employee['children'].length > 0) {
+        setExpanded(true);
+        if (expandedNodes[data.employee['level']]) {
+          const employeeToRemove = expandedNodes[data.employee['level']];
+          const { nodes: adjustedNodes, edges: adjustedEdges } = removeNodes(employeeToRemove, nodes, edges);
+          setNodes(adjustedNodes);
+          setEdges(adjustedEdges);
+          setExpandedNodes((currentExpandedNodes) => ({
+            ...currentExpandedNodes,
+            [data.employee['level']]: data.employee,
+          }));
+          const node = nodes.find((n) => n.id === data.employee['Employee Id'].toString());
+          const { nodes: newNodes, edges: newEdges } = createNodeArray(data.employee, node.position.x, node.position.y);
+          setNodes([...adjustedNodes, ...newNodes]);
+          setEdges([...adjustedEdges, ...newEdges]);
+        } else {
+          setExpandedNodes((currentExpandedNodes) => ({
+            ...currentExpandedNodes,
+            [data.employee['level']]: data.employee,
+          }));
+          const node = nodes.find((n) => n.id === data.employee['Employee Id'].toString());
+          const { nodes: newNodes, edges: newEdges } = createNodeArray(data.employee, node.position.x , node.position.y);
+          setNodes([...nodes, ...newNodes]);
+          setEdges([...edges, ...newEdges]);
+        }
+      }
+    }
+  
+
 
     const expandEmployee = () => {
         if (expanded) {
+          console.log('collapsing');
           setExpanded(false);
           const { nodes: newNodes, edges: newEdges } = removeNodes(data.employee, nodes, edges);
           setNodes(newNodes);
           setEdges(newEdges);
+          expandNode();
+          
         } else {
-          if (data.employee && data.employee['children'].length > 0) {
-            setExpanded(true);
-            if (expandedNodes[data.employee['level']]) {
-              const employeeToRemove = expandedNodes[data.employee['level']];
-              const { nodes: adjustedNodes, edges: adjustedEdges } = removeNodes(employeeToRemove, nodes, edges);
-              setNodes(adjustedNodes);
-              setEdges(adjustedEdges);
-              setExpandedNodes((currentExpandedNodes) => ({
-                ...currentExpandedNodes,
-                [data.employee['level']]: data.employee,
-              }));
-              const node = nodes.find((n) => n.id === data.employee['Employee Id'].toString());
-              const { nodes: newNodes, edges: newEdges } = createNodeArray(data.employee, node.position.x + 125, node.position.y);
-              setNodes([...adjustedNodes, ...newNodes]);
-              setEdges([...adjustedEdges, ...newEdges]);
-            } else {
-              setExpandedNodes((currentExpandedNodes) => ({
-                ...currentExpandedNodes,
-                [data.employee['level']]: data.employee,
-              }));
-              const node = nodes.find((n) => n.id === data.employee['Employee Id'].toString());
-              const { nodes: newNodes, edges: newEdges } = createNodeArray(data.employee, node.position.x + 125, node.position.y);
-              setNodes([...nodes, ...newNodes]);
-              setEdges([...edges, ...newEdges]);
-            }
-          }
+          expandNode();
         }
       };
-      
 
-  useEffect(() => {
-  }, [data]);
 
   return (
     <>

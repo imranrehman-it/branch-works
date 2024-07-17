@@ -16,8 +16,6 @@ const nodeTypes = { employeeCard: EmployeeCard };
 
 const Flow = ({ treeHead }) => {
   const { nodes, setNodes, edges, setEdges } = useGlobalState();
-  console.log('nodes', nodes);
-    console.log('edges', edges);
 
     useEffect(() => {
         if (treeHead) {
@@ -28,7 +26,7 @@ const Flow = ({ treeHead }) => {
             type: 'employeeCard',
           };
           setNodes([initialNode]);
-          const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0, 0);
+          const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0 , 0);
           setNodes((currentNodes) => [...currentNodes, ...newNodes]);
           setEdges(newEdges);
         }
