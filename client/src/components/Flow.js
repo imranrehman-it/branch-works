@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import googleIcon from './googleicon.png';
 import { useGlobalState } from '../utils/GlobalStateContext';
 import {
   ReactFlow,
@@ -16,7 +17,7 @@ const nodeTypes = { employeeCard: EmployeeCard };
 
 const Flow = ({ treeHead }) => {
 
-  const { nodes, setNodes, edges, setEdges } = useGlobalState();
+  const { nodes, setNodes, edges, setEdges, currentSelectedNode, setCurrentSelectedNode } = useGlobalState();
 
   useEffect(() => {
       if (treeHead) {
@@ -31,6 +32,7 @@ const Flow = ({ treeHead }) => {
         setNodes((currentNodes) => [...currentNodes, ...newNodes]);
         setEdges(newEdges);
       }
+      setCurrentSelectedNode(treeHead);
     }, [treeHead]);
       
     
@@ -45,17 +47,18 @@ const Flow = ({ treeHead }) => {
   );
 
   return (
-    <div style={{ height: '90%' }}>
+    
+    <div className='m-4 rounded-md bg-slate-50 shadow-lg' style={{ height: '70vh', }}>
       <ReactFlow
         nodes={nodes}
         onNodesChange={onNodesChange}
         edges={edges}
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
-        fitView
+        fitView='zoomToFit'
       >
         <Background />
-        <Controls />
+        <Controls position='top-right' />
       </ReactFlow>
     </div>
   );

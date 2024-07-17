@@ -8,12 +8,13 @@ import { updateExpandedNodes, updateNodesAndEdges, appendNodesAndEdges } from '.
 
 
 const EmployeeCard = ({isConnectable, data}) => {
-    const { nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes } = useGlobalState();
+    const { nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes, setCurrentSelectedNode } = useGlobalState();
     const [expanded, setExpanded] = useState(false);
     const employee = data.employee;
 
   
     const expandNode = () => {
+      setCurrentSelectedNode(employee);
       if (employee && employee['children'].length > 0) {
 
         setExpanded(true);

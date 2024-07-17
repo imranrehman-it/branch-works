@@ -8,6 +8,7 @@ export const GlobalStateProvider = ({ children }) => {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
   const [expandedNodes, setExpandedNodes] = useState({});
+  const [currentSelectedNode, setCurrentSelectedNode] = useState(null);
 
 
   useEffect(()=>{
@@ -17,7 +18,7 @@ export const GlobalStateProvider = ({ children }) => {
 
   return (
     <GlobalStateContext.Provider
-      value={{ nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes }}
+      value={{ nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes, currentSelectedNode, setCurrentSelectedNode }}
     >
       {children}
     </GlobalStateContext.Provider>
