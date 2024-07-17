@@ -7,10 +7,11 @@ const GlobalStateContext = createContext();
 export const GlobalStateProvider = ({ children }) => {
   const [nodes, setNodes] = useState([]);
   const [edges, setEdges] = useState([]);
+  const [expandedNodes, setExpandedNodes] = useState({});
 
   return (
     <GlobalStateContext.Provider
-      value={{ nodes, setNodes, edges, setEdges }}
+      value={{ nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes }}
     >
       {children}
     </GlobalStateContext.Provider>

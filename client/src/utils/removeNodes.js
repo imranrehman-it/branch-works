@@ -1,13 +1,13 @@
-
-const removeNodes = (treeHead, nodes) => {
-    if (treeHead && treeHead['children'] && Array.isArray(treeHead['children'])) {
-        treeHead['children'].forEach((child) => {
+const removeNodes = (treeHead, nodes, edges) => {
+    if (treeHead && treeHead['children'] && Array.isArray(treeHead['children']) && edges && Array.isArray(edges)) {
+      treeHead['children'].forEach((child) => {
         nodes = nodes.filter((node) => node.id !== child['Employee Id'].toString());
-        nodes = removeNodes(child, nodes);
-        });
+        edges = edges.filter((edge) => !edge.id.startsWith(`${treeHead['Employee Id']}-`));
+        removeNodes(child, nodes, edges);
+      });
     }
-    
-    return nodes;
-}
-
-export default removeNodes;
+    return { nodes, edges };
+  };
+  
+  export default removeNodes;
+  

@@ -10,7 +10,7 @@ const createNodes = (parent, posX, posY, nodes, edges) => {
   
  
 
-      edges.push({ id: `${parent['Employee Id']}-${child['Employee Id']}`, source: parent['Employee Id'].toString(), target: child['Employee Id'].toString() , type: 'smoothstep' });
+      edges.push({ id: `${parent['Employee Id']}-${child['Employee Id']}`, source: parent['Employee Id'].toString(), target: child['Employee Id'].toString() , type: 'animated' });
 
     });
   }
@@ -28,10 +28,6 @@ const createNodeArray = (treeHead, posX, posY) => {
 //   nodes.push({ id: treeHead['Employee Id'].toString(), data: { employee: treeHead }, position: { x, y }, type: 'employeeCard', hidden: false });
 
   createNodes(treeHead, x, y, nodes, edges);
-
-  console.log('nodes', nodes);
-  console.log('edges', edges);
-
   return { nodes, edges };
 };
 
