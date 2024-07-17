@@ -10,10 +10,13 @@ const EmployeeCard = ({isConnectable, data}) => {
     const { nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes } = useGlobalState();
     const [expanded, setExpanded] = useState(false);
 
+
+        
+
     const expandEmployee = () => {
         if (expanded) {
           setExpanded(false);
-          const { nodes: newNodes, edges: newEdges } = removeNodes(data.employee, [...nodes], [...edges]);
+          const { nodes: newNodes, edges: newEdges } = removeNodes(data.employee, nodes, edges);
           setNodes(newNodes);
           setEdges(newEdges);
         } else {
@@ -21,7 +24,7 @@ const EmployeeCard = ({isConnectable, data}) => {
             setExpanded(true);
             if (expandedNodes[data.employee['level']]) {
               const employeeToRemove = expandedNodes[data.employee['level']];
-              const { nodes: adjustedNodes, edges: adjustedEdges } = removeNodes(employeeToRemove, [...nodes], [...edges]);
+              const { nodes: adjustedNodes, edges: adjustedEdges } = removeNodes(employeeToRemove, nodes, edges);
               setNodes(adjustedNodes);
               setEdges(adjustedEdges);
               setExpandedNodes((currentExpandedNodes) => ({
