@@ -25,7 +25,7 @@ const EmployeeData = () => {
 
   return (
     <div className='bg-slate-100 shadow-lg rounded-md p-4 border-slate w-[15%] flex flex-col gap-2' style={glassStyle}>
-        <ContactInfo />
+       {currentSelectedNode && (<ContactInfo currentSelectedNode={currentSelectedNode} />)}
         <CostInfo />
         <BusinessInfo />  
         <HiearchyInfo /> 
