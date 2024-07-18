@@ -2,7 +2,7 @@ import React from 'react'
 
 export const EmployeeCardContainer = ({employee}) => {
   return (
-    <div className="flex flex-col w-full bg-white shadow-md rounded-md p-4 items-center">
+    <div className="flex flex-col w[30%] bg-white shadow-md rounded-md p-4 items-center">
       <div className='header flex flex-col items-center'>
         <p className='text-white text-center text-lg justify-around p-1 font-bold w-10 h-10 bg-black rounded-full absolute -translate-y-8'>IR</p>
         <h1 className='text-black text-nowrap text-left text-lg font-semibold mt-3'>{employee['Name']}</h1>
@@ -21,7 +21,7 @@ export const EmployeeCardContainer = ({employee}) => {
                     <p className='bg-yellow-200 w-fit h-fit px-2 py-1 rounded-full text-sm font-semibold shadow-md text-nowrap'>🎉outstanding</p>
                     <p className='bg-blue-100 w-fit h-fit px-2 py-1 rounded-full text-sm font-semibold shadow-md text-nowrap'>Business Pillar: Integrity and Ethics</p>
                     <p className='bg-blue-100 w-fit h-fit px-2 py-1 rounded-full text-sm font-semibold shadow-md text-nowrap'>Job Title: Intermediate VP of Operations</p>
-                    <div className='flex flex-wrap justify-center gap-1  mt-4'>
+                    {/* <div className='flex flex-wrap justify-center gap-1  mt-4'>
                         <p className='bg-blue-100 w-fit h-fit px-2 py-1 rounded-full text-sm font-semibold shadow-md text-nowrap'>Business Pillar: Integrity and Ethics</p>
                         <p className='bg-blue-100 w-fit h-fit px-2 py-1 rounded-full text-[0.8rem] font-semibold shadow-md text-nowrap'>Business Sector: Transportation and Logistics</p>
                         <p className='bg-blue-100 w-fit h-fit px-2 py-1 rounded-full text-[0.8rem] font-semibold shadow-md text-nowrap'>Company: NAB NebulaWays Advisory Bureau</p>
@@ -49,7 +49,7 @@ export const EmployeeCardContainer = ({employee}) => {
                         <p className='bg-blue-100 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap'>Status: Active</p>
                         <p className='bg-blue-100 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap'>Work Shift: Zero-Hours Contract</p>
                         <p className='bg-blue-100 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap'>Age: 51</p>
-                    </div>
+                    </div> */}
                 
                 </div>
             </div>

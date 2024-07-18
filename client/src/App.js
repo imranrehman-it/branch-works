@@ -18,18 +18,19 @@ const App = () => {
   }, [data]);
 
   return (
-    <div className="App p-4">
-      <div className='flex flex-row items-center'>
+    <div className="App p-4 flex flex-col  w-screen items-center">
+      {/* <div className='flex flex-row items-center w-[95%]'>
         <img className='h-10'src={googleIcon}/>
         <h1 className='text-center text-xl font-semibold'>Google</h1>
+      </div> */}
+      <div className='flex flex-row w-[100%] h-full gap-4'>
+        <Flow treeHead={treeHead} />
+        <EmployeeData />
+        
+
       </div>
 
-      <Flow treeHead={treeHead} />
-
-      <div className='flex flex-row w-full h-[50vh] m-4 gap-4 '>
-        <EmployeeData emp />
-        {/* <EmployeeData /> */}
-      </div>
+     
 
     </div>
   );

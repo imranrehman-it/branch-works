@@ -17,7 +17,7 @@ const nodeTypes = { employeeCard: EmployeeCard };
 
 const Flow = ({ treeHead }) => {
 
-  const { nodes, setNodes, edges, setEdges, currentSelectedNode, setCurrentSelectedNode } = useGlobalState();
+  const { nodes, setNodes, edges, setEdges, currentSelectedNode, setCurrentSelectedNode, setExpandedNodes } = useGlobalState();
 
   useEffect(() => {
       if (treeHead) {
@@ -33,6 +33,7 @@ const Flow = ({ treeHead }) => {
         setEdges(newEdges);
       }
       setCurrentSelectedNode(treeHead);
+      setExpandedNodes({"1": treeHead});
     }, [treeHead]);
       
     
@@ -48,13 +49,14 @@ const Flow = ({ treeHead }) => {
 
   return (
     
-    <div className='m-4 rounded-md bg-slate-50 shadow-lg' style={{ height: '70vh', }}>
+    <div className=' rounded-md bg-slate-50 shadow-lg' style={{ height: '100vh', width: '84vw' }}>
       <ReactFlow
         nodes={nodes}
         onNodesChange={onNodesChange}
         edges={edges}
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
+        
         fitView='zoomToFit'
       >
         <Background />
