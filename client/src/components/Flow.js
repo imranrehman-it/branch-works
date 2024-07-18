@@ -12,12 +12,13 @@ import '@xyflow/react/dist/style.css';
 
 import EmployeeCard from './EmloyeeCard';
 import createNodeArray from '../utils/createNodes';
+import searchNodeByName from '../utils/searchNode';
 
 const nodeTypes = { employeeCard: EmployeeCard };
 
 const Flow = ({ treeHead }) => {
 
-  const { nodes, setNodes, edges, setEdges, currentSelectedNode, setCurrentSelectedNode, setExpandedNodes } = useGlobalState();
+  const { nodes, setNodes, edges, setEdges, currentSelectedNode, setCurrentSelectedNode, setExpandedNodes, setSearchPath } = useGlobalState();
 
   useEffect(() => {
       if (treeHead) {
@@ -35,6 +36,12 @@ const Flow = ({ treeHead }) => {
       setCurrentSelectedNode(treeHead);
       setExpandedNodes({"1": treeHead});
     }, [treeHead]);
+
+    useEffect(() => {
+      if (currentSelectedNode) {
+        setSearchPath(searchNodeByName(currentSelectedNode, 'James Trent'));
+      }
+    }, [currentSelectedNode]);
       
     
   const onNodesChange = useCallback(
@@ -50,13 +57,13 @@ const Flow = ({ treeHead }) => {
   return (
     
     <div className=' rounded-md bg-slate-50 shadow-lg' style={{ height: '100vh', width: '84vw' }}>
+      <input type='text' className='bg-slate-50 w-full h-12 rounded-md border-slate-100 border-2 p-2' placeholder='Search' />
       <ReactFlow
         nodes={nodes}
         onNodesChange={onNodesChange}
         edges={edges}
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
-        
         fitView='zoomToFit'
       >
         <Background />

@@ -3,59 +3,29 @@ import { Handle, Position } from '@xyflow/react';
 import { useGlobalState } from '../utils/GlobalStateContext';
 import createNodeArray from '../utils/createNodes';
 import removeNodes from '../utils/removeNodes';
+import searchNodeByName from '../utils/searchNode';
 import { updateExpandedNodes, updateNodesAndEdges, appendNodesAndEdges } from '../utils/nodeState';
 
 
-
 const EmployeeCard = ({isConnectable, data}) => {
-    const { nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes, setCurrentSelectedNode } = useGlobalState();
+    const { expandNode, collapseNode} = useGlobalState();
     const [expanded, setExpanded] = useState(false);
     const employee = data.employee;
 
-  
-    const expandNode = () => {
-      setCurrentSelectedNode(employee);
-      if (employee && employee['children'].length > 0) {
-
-        setExpanded(true);
-
-        if (expandedNodes[employee['level']]) {
-          //remove all children of the expanded node that is set of the level
-          const employeeToRemove = expandedNodes[employee['level']];
-          const { nodes: adjustedNodes, edges: adjustedEdges } = removeNodes(employeeToRemove, nodes, edges);
-          updateNodesAndEdges(setNodes, setEdges, adjustedNodes, adjustedEdges);
-          updateExpandedNodes(setExpandedNodes, employee, employee['level']);
-
-          //get the node data of the current node we are expanding and create new nodes and edges
-          const node = nodes.find((n) => n.id === employee['Employee Id'].toString());
-          const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position.x, node.position.y);
-          appendNodesAndEdges(setNodes, setEdges, newNodes, newEdges);
-
-        } else {
-          //get the node data of the current node we are expanding and create new nodes and edges
-          updateExpandedNodes(setExpandedNodes, employee, employee['level']);
-          const node = nodes.find((n) => n.id === employee['Employee Id'].toString());
-          const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position.x , node.position.y);
-          appendNodesAndEdges(setNodes, setEdges, newNodes, newEdges);
-        }
-      }
-    }
-
-    const collapseNode = () => {
-      setExpanded(false);
-      const { nodes: newNodes, edges: newEdges } = removeNodes(employee, nodes, edges);
-      setNodes(newNodes);
-      setEdges(newEdges);
-      expandNode();
-    };
-  
+    // useEffect(() => {
+    //   searchPath.forEach((employee) => {
+    //     expandNode(employee, expanded, setExpanded);
+    //   });
+    // }, [searchPath, ]);
 
 
     const expandEmployee = () => {
         if (expanded) {
-          collapseNode();
+          setExpanded(false);
+          collapseNode(employee, expanded);
         } else {
-          expandNode();
+          setExpanded(true);
+          expandNode(employee, expanded);
         }
       };
 
