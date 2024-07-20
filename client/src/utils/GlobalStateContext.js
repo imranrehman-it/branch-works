@@ -14,54 +14,87 @@ export const GlobalStateProvider = ({ children }) => {
   const [currentSelectedNode, setCurrentSelectedNode] = useState(null);
   const [searchPath, setSearchPath] = useState([]);
 
-
-  useEffect(()=>{
-    console.log('nodes has been expanded');
-  }, [expandedNodes])
+  useEffect(() => {
+    console.log('nodes have been expanded');
+  }, [expandedNodes]);
 
   useEffect(() => {
-    searchPath.forEach((employee) => {
-      expandNode(employee);
-    });
-  }, [searchPath]);
+    console.log('nodes have been updated', nodes);
+  }, [nodes]);
+
+  useEffect(() => {
+    console.log('searchPath', searchPath);
+    searchPath.forEach((employee, index) => {
+      setTimeout(() => {
+        setNodes(currentNodes => {
+          const node = currentNodes.find((n) => n.id === employee['Employee Id'].toString());
+          if (!node) {
+            console.error('Node not found');
+            return currentNodes;
+          }
+          updateExpandedNodes(setExpandedNodes, employee, employee['level']);
+          const { nodes: newNodes } = createNodeArray(employee, node.position.x, node.position.y);
+          setEdges(currentEdges => {
+            const node = currentNodes.find((n) => n.id === employee['Employee Id'].toString());
+            if (!node) {
+              console.error('Edge not found');
+              return currentEdges;
+            }
+            const { edges: newEdges } = createNodeArray(employee, node.position.x, node.position.y);
+            return [...currentEdges, ...newEdges];
+    
+        });
+          return [...currentNodes, ...newNodes];
+        });
+
+       
+      }, index * 250);
+    }
+  );
 
 
-  const expandNode = (employee, expand) => {
+  }, [searchPath])
+
+  const expandNode = (employee) => {
     setCurrentSelectedNode(employee);
     if (employee && employee['children'].length > 0) {
-
-
       if (expandedNodes[employee['level']]) {
-        //remove all children of the expanded node that is set of the level
+        // Remove all children of the expanded node that is set at the level
         const employeeToRemove = expandedNodes[employee['level']];
         const { nodes: adjustedNodes, edges: adjustedEdges } = removeNodes(employeeToRemove, nodes, edges);
         updateNodesAndEdges(setNodes, setEdges, adjustedNodes, adjustedEdges);
         updateExpandedNodes(setExpandedNodes, employee, employee['level']);
 
-        //get the node data of the current node we are expanding and create new nodes and edges
+        // Get the node data of the current node we are expanding and create new nodes and edges
         const node = nodes.find((n) => n.id === employee['Employee Id'].toString());
+        if (!node) {
+          console.error('Node not found');
+          return;
+        }
+        console.log('node expanded', node);
         const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position.x, node.position.y);
         appendNodesAndEdges(setNodes, setEdges, newNodes, newEdges);
 
       } else {
-        //get the node data of the current node we are expanding and create new nodes and edges
+        // Get the node data of the current node we are expanding and create new nodes and edges
         updateExpandedNodes(setExpandedNodes, employee, employee['level']);
         const node = nodes.find((n) => n.id === employee['Employee Id'].toString());
-        const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position.x , node.position.y);
+        if (!node) {
+          console.error('Node not found');
+          return;
+        }
+        const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position?.x, node.position?.y);
         appendNodesAndEdges(setNodes, setEdges, newNodes, newEdges);
       }
     }
-  }
+  };
 
-  const collapseNode = (employee, expand) => {
+  const collapseNode = (employee) => {
     const { nodes: newNodes, edges: newEdges } = removeNodes(employee, nodes, edges);
     setNodes(newNodes);
     setEdges(newEdges);
     expandNode(employee);
   };
-
-
-
 
   return (
     <GlobalStateContext.Provider
@@ -72,7 +105,7 @@ export const GlobalStateProvider = ({ children }) => {
   );
 };
 
-// Custom hook to use the global statex
+// Custom hook to use the global state
 export const useGlobalState = () => {
   const context = useContext(GlobalStateContext);
   if (!context) {

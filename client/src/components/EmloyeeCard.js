@@ -12,11 +12,7 @@ const EmployeeCard = ({isConnectable, data}) => {
     const [expanded, setExpanded] = useState(false);
     const employee = data.employee;
 
-    // useEffect(() => {
-    //   searchPath.forEach((employee) => {
-    //     expandNode(employee, expanded, setExpanded);
-    //   });
-    // }, [searchPath, ]);
+   
 
 
     const expandEmployee = () => {

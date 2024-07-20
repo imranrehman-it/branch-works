@@ -18,7 +18,7 @@ const nodeTypes = { employeeCard: EmployeeCard };
 
 const Flow = ({ treeHead }) => {
 
-  const { nodes, setNodes, edges, setEdges, currentSelectedNode, setCurrentSelectedNode, setExpandedNodes, setSearchPath } = useGlobalState();
+  const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes } = useGlobalState();
 
   useEffect(() => {
       if (treeHead) {
@@ -37,11 +37,6 @@ const Flow = ({ treeHead }) => {
       setExpandedNodes({"1": treeHead});
     }, [treeHead]);
 
-    useEffect(() => {
-      if (currentSelectedNode) {
-        setSearchPath(searchNodeByName(currentSelectedNode, 'James Trent'));
-      }
-    }, [currentSelectedNode]);
       
     
   const onNodesChange = useCallback(

@@ -1,16 +1,15 @@
 const searchNodeByName = (treeHead, name) => {
     const path = [];
+
+    console.log('treeHead search', treeHead);
+    console.log('name search', name);
   
     const recursiveSearch = (node, name) => {
-      // Add the current node to the path
       path.push(node);
-  
-      // Check if the current node is the target node
+
       if (node['Name'] === name) {
         return true;
       }
-  
-      // If the node has children, search them recursively
       if (Array.isArray(node['children']) && node['children'].length > 0) {
         for (const child of node['children']) {
           if (recursiveSearch(child, name)) {
@@ -18,16 +17,13 @@ const searchNodeByName = (treeHead, name) => {
           }
         }
       }
-  
-      // If the node is not found in the current path, remove the current node from the path
       path.pop();
       return false;
     };
-  
-    // Start the recursive search
     recursiveSearch(treeHead, name);
-  
-    return path;
+    
+    //return all but the last index
+    return path.slice(0, -1);
   };
   
   export default searchNodeByName;
