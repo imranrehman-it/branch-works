@@ -3,8 +3,6 @@ import React, { useState, useEffect } from 'react';
 import useFetchEmployees from './hooks/fetchEmployees';
 import Flow from './components/Flow';
 import EmployeeData from './components/EmployeeData';
-import SearchBar from './components/SearchBar';
-import googleIcon from './components/googleicon.png';
 
 const App = () => {
   const { data, loading, error } = useFetchEmployees();
