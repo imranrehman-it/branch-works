@@ -27,12 +27,12 @@ export const GlobalStateProvider = ({ children }) => {
     console.log('searchPath', searchPath);
     //get the last node in the search path and expand
     const lastNode = searchPath[searchPath.length - 1];
-    if (nodes.find((n) => n.id === lastNode['Employee Id'].toString())){
-      console.log('Node already exists');
-      setCurrentSelectedNode(lastNode);
-      return;
-    }
     if (searchPath.length != 0) {
+      if (nodes.find((n) => n.id === lastNode['Employee Id'].toString())){
+        console.log('Node already exists');
+        setCurrentSelectedNode(lastNode);
+        return;
+      }
       collapseNode(searchPath[0]);
     }
     searchPath.forEach((employee, index) => {

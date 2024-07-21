@@ -6,6 +6,7 @@ import ContactInfo from './EmployeeDataComponenets/ContactInfo'
 import CostInfo from './EmployeeDataComponenets/CostInfo'
 import BusinessInfo from './EmployeeDataComponenets/BusinessInfo'
 import HiearchyInfo from './EmployeeDataComponenets/HiearchyInfo'
+import MetricSelection from './EmployeeDataComponenets/MetricSelection'
 import SearchBar from './SearchBar'
 
 const EmployeeData = ({treeHead}) => {
@@ -25,11 +26,12 @@ const EmployeeData = ({treeHead}) => {
 
 
   return (
-    <div className='bg-slate-100 shadow-lg rounded-md p-4 border-slate w-[15%] flex flex-col gap-2' style={glassStyle}>
+    <div className='bg-slate-100 shadow-lg rounded-md p-4 border-slate w-[15%] flex flex-col gap-2 max-h-screen overflow-scroll' style={glassStyle}>
         <SearchBar treeHead={treeHead}/>
        {currentSelectedNode && (<ContactInfo currentSelectedNode={currentSelectedNode} />)}
        {currentSelectedNode && (<CostInfo currentSelectedNode={currentSelectedNode} />)}
        {currentSelectedNode && (<BusinessInfo currentSelectedNode={currentSelectedNode} />)}
+        {currentSelectedNode && (<MetricSelection />)}
         <HiearchyInfo /> 
     </div>
 
