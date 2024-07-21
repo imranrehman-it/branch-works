@@ -7,6 +7,7 @@ const ContactInfo = ({ currentSelectedNode }) => {
   return (
     <div id='contact' className='w-full h-fit bg-white rounded-md shadow-sm flex flex-col gap-2 p-4 items-center'>
       <div className='flex w-12 h-12 bg-blue-300 rounded-md transition-all duration-300'>
+        <img src={`https://api.dicebear.com/9.x/pixel-art/svg?seed=${currentSelectedNode['Name']}`} alt="profile" className='w-12 h-12 rounded-md'/>
       </div>
       <div className='flex flex-col items-center'>
         <p className='text-black text-nowrap text-left text-[0.8rem] font-semibold'>{currentSelectedNode['Name']}</p>
