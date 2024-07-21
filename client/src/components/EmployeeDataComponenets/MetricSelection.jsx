@@ -6,9 +6,9 @@ export const MetricSelection = () => {
     "blue": 'level',
     "purple": 'Location',
     "green": 'IC Cost',
-    "green": 'Gender',
+    "blue": 'Gender',
     "yellow": 'Management Cost',
-    "yellow": 'Performance'
+    "slate": 'Performance'
   };
 
   return (

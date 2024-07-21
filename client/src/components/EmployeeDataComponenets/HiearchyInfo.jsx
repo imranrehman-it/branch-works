@@ -20,7 +20,7 @@ const HiearchyInfo = () => {
                     <RowItem label={'Level ' + node['level']} data={node['Name']} color={'blue'}/>
                   );
                 }
-                return null; // Return null for keys with no value or without a Name property
+                return null;
               })
             }
         </div>

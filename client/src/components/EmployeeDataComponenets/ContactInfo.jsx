@@ -10,7 +10,7 @@ const ContactInfo = ({ currentSelectedNode }) => {
       </div>
       <div className='flex flex-col items-center'>
         <p className='text-black text-nowrap text-left text-[0.8rem] font-semibold'>{currentSelectedNode['Name']}</p>
-        <p className='text-black text-left text-center text-[0.6rem] font-semibold'>{currentSelectedNode['Job Title']}<span className='font-medium text-purple-600'> @Agentnoon</span></p>
+        <p className='text-black text-center text-[0.6rem] font-semibold'>{currentSelectedNode['Job Title']}<span className='font-medium text-purple-600'> @Agentnoon</span></p>
       </div>
       <div className="flex flex-col w-full mt-5 gap-2">
         <div className='flex flex-row gap-2 items-center'>

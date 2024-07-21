@@ -19,13 +19,8 @@ const EmployeeCard = ({ isConnectable, data }) => {
   };
 
   useEffect(() => {
-    if (currentSelectedNode && currentSelectedNode['Employee Id'] === employee['Employee Id']) {
-      setSelectedNode(true);
-      console.log('selected node yahoo', employee['Employee Id']);
-    } else {
-      setSelectedNode(false);
-    }
-  }, [currentSelectedNode]);
+    setSelectedNode(currentSelectedNode && currentSelectedNode['Employee Id'] === employee['Employee Id']);
+  }, [currentSelectedNode, employee]);
 
   return (
     <>
