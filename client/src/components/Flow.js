@@ -7,43 +7,50 @@ import {
   Background,
   applyNodeChanges,
   applyEdgeChanges,
-
+  ReactFlowProvider,
+  useReactFlow
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
 import EmployeeCard from './EmloyeeCard';
-import {createNodeArray}from '../utils/createNodes';
+import { createNodeArray } from '../utils/createNodes';
 import searchNodeByName from '../utils/searchNode';
 
 const nodeTypes = { employeeCard: EmployeeCard };
 
-const Flow = ({ treeHead }) => {
-
+const FlowComponent = ({ treeHead }) => {
   const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes, currentSelectedNode } = useGlobalState();
-
-
+  const reactFlowInstance = useReactFlow();
 
   useEffect(() => {
-      if (treeHead) {
-        const initialNode = {
-          id: "0",
-          data: { employee: treeHead },
-          position: { x: 0, y: 0 },
-          type: 'employeeCard',
-        };
-        setNodes([initialNode]);
-        const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0 , 0);
-        setNodes((currentNodes) => [...currentNodes, ...newNodes]);
-        setEdges(newEdges);
+    if (treeHead) {
+      const initialNode = {
+        id: "0",
+        data: { employee: treeHead },
+        position: { x: 0, y: 0 },
+        type: 'employeeCard',
+      };
+      setNodes([initialNode]);
+      const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0, 0);
+      setNodes((currentNodes) => [...currentNodes, ...newNodes]);
+      setEdges(newEdges);
+    }
+    setCurrentSelectedNode(treeHead);
+    setExpandedNodes({ "1": treeHead });
+  }, [treeHead, setCurrentSelectedNode, setExpandedNodes, setNodes, setEdges]);
+
+  useEffect(() => {
+    if (currentSelectedNode) {
+      const selectedNode = nodes.find(node => node.data.employee === currentSelectedNode);
+      if (selectedNode) {
+        //get curent zoom level
+        const zoomLevel = reactFlowInstance.getZoom();
+        
+        reactFlowInstance.setCenter(selectedNode.position.x+125, selectedNode.position.y+500, { zoom: zoomLevel, animated: true, duration: 1000 });
       }
-      setCurrentSelectedNode(treeHead);
-      setExpandedNodes({"1": treeHead});
-    }, [treeHead]);
+    }
+  }, [currentSelectedNode, nodes, reactFlowInstance]);
 
-
-
-      
-    
   const onNodesChange = useCallback(
     (changes) => setNodes((currentNodes) => applyNodeChanges(changes, currentNodes)),
     [setNodes],
@@ -54,19 +61,8 @@ const Flow = ({ treeHead }) => {
     [setEdges],
   );
 
-  
-
-  
-  // useEffect(() => {
-  //   if (currentSelectedNode) {
-  //     focusNode(currentSelectedNode);
-  //   }
-
-  // }, [currentSelectedNode]);
-
   return (
-    
-    <div className=' rounded-md bg-slate-50 shadow-lg' style={{ height: '100vh', width: '84vw' }}>
+    <div className='rounded-md bg-slate-50 shadow-lg' style={{ height: '100vh', width: '84vw' }}>
       <ReactFlow
         nodes={nodes}
         onNodesChange={onNodesChange}
@@ -84,5 +80,11 @@ const Flow = ({ treeHead }) => {
     </div>
   );
 };
+
+const Flow = ({ treeHead }) => (
+  <ReactFlowProvider>
+    <FlowComponent treeHead={treeHead} />
+  </ReactFlowProvider>
+);
 
 export default Flow;
