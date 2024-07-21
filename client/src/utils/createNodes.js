@@ -47,7 +47,6 @@ const createNodeArray = (treeHead, posX, posY) => {
   if (!treeHead) {
     return { nodes: [], edges: [] };
   }
-
   let nodes = [];
   let edges = [];
   const { x, y } = { x: posX, y: posY };
