@@ -20,20 +20,12 @@ const App = () => {
 
   return (
     <div className="App p-4 flex flex-col  w-screen items-center">
-      {/* <div className='flex flex-row items-center w-[95%]'>
-        <img className='h-10'src={googleIcon}/>
-        <h1 className='text-center text-xl font-semibold'>Google</h1>
-      </div> */}
-      <SearchBar treeHead={treeHead}/>
       <div className='flex flex-row w-[100%] h-full gap-4'>
-        <Flow treeHead={treeHead} />
-        <EmployeeData />
-        
-
+        <div className='flex flex-col'>
+          <Flow treeHead={treeHead} />
+        </div>
+        {treeHead && (<EmployeeData treeHead={treeHead} />)}
       </div>
-
-     
-
     </div>
   );
 };

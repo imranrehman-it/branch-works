@@ -23,7 +23,7 @@ const searchNodeByName = (treeHead, name) => {
     recursiveSearch(treeHead, name);
     
     //return all but the last index
-    return path.slice(0, -1);
+    return path
   };
   
   export default searchNodeByName;

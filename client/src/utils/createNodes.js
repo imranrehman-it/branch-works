@@ -1,6 +1,30 @@
 import calculateNewPosition from "./newPositionCalculation";
 
-const createNodes = (parent, posX, posY, nodes, edges) => {
+
+const createNodesAndEdges = (parent, posX, posY, nodes, edges) => {
+      createNodes(parent, posX, posY, nodes, edges);
+      createEdges(parent, nodes, edges);
+};
+
+const createEdges = (parent, nodes, edges) => {
+  if (parent && parent['children'] && Array.isArray(parent['children'])) {
+    parent['children'].forEach((child) => {
+      if (edges.find((edge) => edge.id === `${parent['Employee Id']}-${child['Employee Id']}`)) {
+        return;
+      }
+      edges.push({
+        id: `${parent['Employee Id']}-${child['Employee Id']}`,
+        source: parent['Employee Id'].toString(),
+        target: child['Employee Id'].toString(),
+        animated: true,
+        style : { strokeWidth: 2 }
+        
+      });
+    });
+  }
+};
+
+const createNodes = (parent, posX, posY, nodes) => {
   if (parent && parent['children'] && Array.isArray(parent['children'])) {
     parent['children'].forEach((child, index) => {
       const { x, y } = calculateNewPosition(posX, posY, parent['children'].length, index);
@@ -14,19 +38,10 @@ const createNodes = (parent, posX, posY, nodes, edges) => {
         type: 'employeeCard',
         hidden: false
       });
-      //check if the edge already exists
-      if (edges.find((edge) => edge.id === `${parent['Employee Id']}-${child['Employee Id']}`)) {
-        return;
-      }
-      edges.push({
-        id: `${parent['Employee Id']}-${child['Employee Id']}`,
-        source: parent['Employee Id'].toString(),
-        target: child['Employee Id'].toString(),
-        animated: true
-      });
     });
+     
   }
-};
+}
 
 const createNodeArray = (treeHead, posX, posY) => {
   if (!treeHead) {
@@ -36,9 +51,10 @@ const createNodeArray = (treeHead, posX, posY) => {
   let nodes = [];
   let edges = [];
   const { x, y } = { x: posX, y: posY };
-  createNodes(treeHead, x, y, nodes, edges);
+  createNodesAndEdges(treeHead, x, y, nodes, edges);
 
   return { nodes, edges };
 };
 
-export default createNodeArray;
+//export all functions
+export { createNodes, createEdges, createNodesAndEdges, createNodeArray };

@@ -1,8 +1,7 @@
 
-
 export const updateNodesAndEdges = (setNodes, setEdges, nodes, edges) => {
-    setNodes(nodes);
-    setEdges(edges);
+    setNodes(currentNodes => nodes);
+    setEdges(currentEdges => edges);
   };
   
   export const updateExpandedNodes = (setExpandedNodes, employee, level) => {

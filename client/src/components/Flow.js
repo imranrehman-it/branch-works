@@ -7,18 +7,21 @@ import {
   Background,
   applyNodeChanges,
   applyEdgeChanges,
+
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
 import EmployeeCard from './EmloyeeCard';
-import createNodeArray from '../utils/createNodes';
+import {createNodeArray}from '../utils/createNodes';
 import searchNodeByName from '../utils/searchNode';
 
 const nodeTypes = { employeeCard: EmployeeCard };
 
 const Flow = ({ treeHead }) => {
 
-  const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes } = useGlobalState();
+  const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes, currentSelectedNode } = useGlobalState();
+
+
 
   useEffect(() => {
       if (treeHead) {
@@ -37,6 +40,8 @@ const Flow = ({ treeHead }) => {
       setExpandedNodes({"1": treeHead});
     }, [treeHead]);
 
+
+
       
     
   const onNodesChange = useCallback(
@@ -49,10 +54,19 @@ const Flow = ({ treeHead }) => {
     [setEdges],
   );
 
+  
+
+  
+  // useEffect(() => {
+  //   if (currentSelectedNode) {
+  //     focusNode(currentSelectedNode);
+  //   }
+
+  // }, [currentSelectedNode]);
+
   return (
     
     <div className=' rounded-md bg-slate-50 shadow-lg' style={{ height: '100vh', width: '84vw' }}>
-      <input type='text' className='bg-slate-50 w-full h-12 rounded-md border-slate-100 border-2 p-2' placeholder='Search' />
       <ReactFlow
         nodes={nodes}
         onNodesChange={onNodesChange}
@@ -60,6 +74,9 @@ const Flow = ({ treeHead }) => {
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
         fitView='zoomToFit'
+        maxZoom={4}
+        minZoom={0.2}
+        defaultZoom={1}
       >
         <Background />
         <Controls position='top-right' />
