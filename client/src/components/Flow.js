@@ -46,7 +46,7 @@ const FlowComponent = ({ treeHead }) => {
         //get curent zoom level
         const zoomLevel = reactFlowInstance.getZoom();
         
-        reactFlowInstance.setCenter(selectedNode.position.x+125, selectedNode.position.y+500, { zoom: zoomLevel, animated: true, duration: 1000 });
+        reactFlowInstance.setCenter(selectedNode.position.x+125, selectedNode.position.y+500, { zoom: zoomLevel, animated: true, duration: 500 });
       }
     }
   }, [currentSelectedNode, nodes, reactFlowInstance]);

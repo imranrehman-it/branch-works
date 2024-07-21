@@ -39,8 +39,8 @@ const EmployeeCard = ({ isConnectable, data }) => {
             {employee['Project']}
           </p>
         </div>
-        <div className={`flex flex-col items-center w-full h-fullrounded-md mt-2 p-2 ${selectedNode ? 'bg-green-50' : 'bg-white'}`}>
-          <div className={`flex flex-wrap w-full justify-center gap-1 ${selectedNode ? 'bg-green-50' : 'bg-white'}`}>
+        <div className={`flex flex-col items-center w-full h-fullrounded-md mt-2 p-2 ${selectedNode ? 'bg-green-50' : 'bg-slate-50'}`}>
+          <div className={`flex flex-wrap w-full justify-center gap-1 ${selectedNode ? 'bg-green-50' : 'bg-slate-50'}`}>
             <p className='bg-purple-100 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] shadow-lg font-semibold text-nowrap'>
               📍{employee['Location']}
             </p>
