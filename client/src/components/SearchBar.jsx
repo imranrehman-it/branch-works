@@ -43,7 +43,7 @@ const SearchBar = ({ treeHead }) => {
         outline='none'
         type='text'
         value={search}
-        className='w-full h-fit rounded-md p-2 focus:!outline-none'
+      className='w-full h-fit rounded-md p-2 focus:!outline-none'
         placeholder='Search...'
       />
       <FaSearch onClick={handleSearchSubmit} className='h-fit text-[3rem] text-blue-500 p-2 cursor-pointer' />

@@ -112,6 +112,7 @@ export const GlobalStateProvider = ({ children }) => {
     const { nodes: newNodes, edges: newEdges } = removeNodes(employee, nodes, edges);
     setNodes(newNodes);
     setEdges(newEdges);
+    expandNode(employee);
   };
 
   return (
