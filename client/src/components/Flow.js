@@ -18,7 +18,7 @@ import searchNodeByName from '../utils/searchNode';
 
 const nodeTypes = { employeeCard: EmployeeCard };
 
-const FlowComponent = ({ treeHead }) => {
+const FlowComponent = ({ treeHead, id}) => {
   const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes, currentSelectedNode } = useGlobalState();
   const reactFlowInstance = useReactFlow();
 
@@ -81,9 +81,9 @@ const FlowComponent = ({ treeHead }) => {
   );
 };
 
-const Flow = ({ treeHead }) => (
+const Flow = ({ treeHead, id }) => (
   <ReactFlowProvider>
-    <FlowComponent treeHead={treeHead} />
+    <FlowComponent treeHead={treeHead} id={id} />
   </ReactFlowProvider>
 );
 

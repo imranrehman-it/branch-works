@@ -23,6 +23,9 @@ const SearchBar = ({ treeHead, employees }) => {
     setSearch(e.target.value);
     setPossibleResults(employees.data.filter((employee) => employee.Name.toLowerCase().includes(e.target.value.toLowerCase())));
     console.log('possibleResults', possibleResults);
+    if(searchFailed){
+      setSearchFailed(false);
+    }
   };
 
   const handleSearchSubmit = (e) => {
@@ -39,6 +42,7 @@ const SearchBar = ({ treeHead, employees }) => {
   };
 
 
+
   return (
     <>
       <div className={`flex flex-row align-middle w-full h-fit bg-white shadow-lg rounded-md gap-4 outline-dotted outline-2 ${searchFailed ? 'outline-red-500' : 'outline-blue-300'}`}>
@@ -53,10 +57,13 @@ const SearchBar = ({ treeHead, employees }) => {
         <FaSearch onClick={handleSearchSubmit} className='h-fit text-[3rem] text-blue-500 p-2 cursor-pointer' />
       </div>
       {search.length > 0 && (
-        <div className='flex flex-col w-full h-fit gap-2 bg-white shadow-lg rounded-md p-2'>
+        <div className='flex flex-col w-full h-fit gap-2 bg-white shadow-lg rounded-md py-2'>
           {possibleResults.slice(0, 5).map((result, index) => (
-            <div key={index} onClick={() => setSearch(result.Name)} className='flex flex-col cursor-pointer mb-2'>
-              <p className='text-black text-nowrap text-sm font-semibold px-2'>{result.Name}</p>
+            <div key={index} onClick={() => setSearch(result.Name)} className='flex flex-col cursor-pointer mb-2 hover:bg-slate-100'>
+              <div className='flex flex-row w-full justify-between p-1'>
+                <p className='text-black text-nowrap text-sm font-semibold px-2'>{result.Name}</p>
+                <p className='text-black bg-red-50 rounded-md text-nowrap text-[0.6rem] font-semibold px-2 h-fit'>Lvl:{result['level']}</p>
+              </div>
               <p className='text-black  text-xs px-2'>{result['Job Title']}</p>
             </div>
           ))}

@@ -43,16 +43,16 @@ const createNodes = (parent, posX, posY, nodes) => {
   }
 }
 
-const createNodeArray = (treeHead, posX, posY) => {
+const createNodeArray = (treeHead, posX, posY, id) => {
   if (!treeHead) {
     return { nodes: [], edges: [] };
   }
   let nodes = [];
   let edges = [];
   const { x, y } = { x: posX, y: posY };
-  createNodesAndEdges(treeHead, x, y, nodes, edges);
+  createNodesAndEdges(treeHead, x, y, nodes, edges, id);
 
-  return { nodes, edges };
+  return { nodes, edges , id};
 };
 
 //export all functions

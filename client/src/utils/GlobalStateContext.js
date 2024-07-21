@@ -7,11 +7,12 @@ import { updateExpandedNodes, appendNodesAndEdges, updateNodesAndEdges } from '.
 const GlobalStateContext = createContext();
 
 export const GlobalStateProvider = ({ children }) => {
-  const [nodes, setNodes] = useState([]);
+  const [nodes, setNodes] = useState();
   const [edges, setEdges] = useState([]);
   const [expandedNodes, setExpandedNodes] = useState({});
   const [currentSelectedNode, setCurrentSelectedNode] = useState(null);
   const [searchPath, setSearchPath] = useState([]);
+  const [currentlySelectedFlow, setCurrentlySelectedFlow] = useState();
 
 
   useEffect(() => {

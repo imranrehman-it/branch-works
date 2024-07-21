@@ -29,9 +29,7 @@ const App = () => {
   return (
     <div className="App p-4 flex flex-col  w-screen items-center">
       <div className='flex flex-row w-[100%] h-full gap-4'>
-        <div className='flex flex-col'>
-          <Flow treeHead={treeHead} />
-        </div>
+         {treeHead && (<Flow treeHead={treeHead} id={'1'} />)}
         {treeHead && (<EmployeeData treeHead={treeHead} employees={employees}/>)}
       </div>
     </div>
