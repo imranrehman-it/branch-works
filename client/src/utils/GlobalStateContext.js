@@ -15,9 +15,9 @@ export const GlobalStateProvider = ({ children }) => {
 
 
   useEffect(() => {
-    const lastNode = searchPath[searchPath.length - 1];
-    const node = nodes.find((n) => n.id === lastNode['Employee Id'].toString());
     if (searchPath.length !== 0) {
+      const lastNode = searchPath[searchPath.length - 1];
+      const node = nodes.find((n) => n.id === lastNode['Employee Id'].toString());
       if (node) {
         setCurrentSelectedNode(lastNode);
         return;
