@@ -1,21 +1,30 @@
-const removeNodes = (treeHead, nodes, edges) => {
-    if (treeHead && edges && Array.isArray(edges)) {
-      if(Array.isArray(treeHead['children']) && treeHead['children'].length > 0){
-        treeHead['children'].forEach((child) => {
-           ({ nodes, edges } = removeNodes(child, nodes, edges));
-      
-          nodes = nodes?.filter((node) => node.id !== child['Employee Id'].toString());
-          edges = edges.filter((edge) => !edge.id.startsWith(`${treeHead['Employee Id']}-`));
-      })
+const removeNodes = (treeHead, nodes, edges, flowId) => {
+  let flowNodes = nodes[flowId] || [];
+  let flowEdges = edges[flowId] || [];
+
+  const removeChildNodesAndEdges = (node) => {
+    if (node.children && node.children.length > 0) {
+      node.children.forEach((child) => {
+        removeChildNodesAndEdges(child);
+        flowNodes = flowNodes.filter((n) => n.id !== child['Employee Id'].toString());
+        flowEdges = flowEdges.filter((e) => !e.id.startsWith(`${node['Employee Id']}-`));
+      });
+    } else {
+      flowNodes = flowNodes.filter((n) => n.id !== node['Employee Id'].toString());
+      flowEdges = flowEdges.filter((e) => !e.id.startsWith(`${node['Employee Id']}-`));
     }
-    else
-      {
-        nodes = nodes?.filter((node) => node.id !== treeHead['Employee Id'].toString());
-        edges = edges.filter((edge) => !edge.id.startsWith(`${treeHead['Employee Id']}-`));
-      }
-    return { nodes, edges };
   };
-}
+
+  if (treeHead) {
+    removeChildNodesAndEdges(treeHead);
+    // flowNodes = flowNodes.filter((n) => n.id !== treeHead['Employee Id'].toString());
+    // flowEdges = flowEdges.filter((e) => !e.id.startsWith(`${treeHead['Employee Id']}-`));
+  }
+
+  return {
+    nodes: { ...nodes, [flowId]: flowNodes },
+    edges: { ...edges, [flowId]: flowEdges }
+  };
+};
 
 export default removeNodes;
-  

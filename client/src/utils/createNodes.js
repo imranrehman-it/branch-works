@@ -45,6 +45,7 @@ const createNodes = (parent, posX, posY, nodes, flowId) => {
 }
 
 const createNodeArray = (treeHead, posX, posY, flowId) => {
+  console.log('flow id received', flowId);
   if (!treeHead) {
     return { nodes: [], edges: [] };
   }

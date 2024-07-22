@@ -12,11 +12,13 @@ const EmployeeCard = ({ isConnectable, data }) => {
     console.log('expanding employee', data);
     if (expanded) {
       setExpanded(false);
-      collapseNode(employee, expanded);
+      console.log('collapsing node');
+      collapseNode(employee, data.flowId);
     } else {
       setExpanded(true);
       expandNode(employee, data.flowId);
     }
+    // expandNode(employee, data.flowId);
   };
 
   useEffect(() => {
