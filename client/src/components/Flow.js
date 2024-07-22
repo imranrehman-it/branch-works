@@ -48,7 +48,18 @@ const FlowComponent = ({ treeHead, id}) => {
       ));
     }
     setCurrentSelectedNode(treeHead);
-    setExpandedNodes({ "1": treeHead });
+
+    const initValue = {
+      [id]: 
+        {
+          [treeHead['level']]: treeHead
+        }
+    }
+    console.log('init value', initValue);
+    setExpandedNodes((currentExpandedNodes) => ({
+      ...currentExpandedNodes,
+      ...initValue  
+    }));
   }, [treeHead, setCurrentSelectedNode, setExpandedNodes, setNodes, setEdges]);
   
   // useEffect(() => {
@@ -109,7 +120,7 @@ const FlowComponent = ({ treeHead, id}) => {
   );
 
   return (
-    <div className='rounded-md bg-slate-50 shadow-lg' style={{ height: '100vh', width: '84vw' }}>
+    <div className='rounded-md bg-slate-50 shadow-lg' style={{ height: '50vh', width: '42vw' }}>
       <ReactFlow
         nodes={nodes[id]}
         onNodesChange={onNodesChange}
@@ -119,7 +130,7 @@ const FlowComponent = ({ treeHead, id}) => {
         fitView='zoomToFit'
         maxZoom={4}
         minZoom={0.2}
-        defaultZoom={1}
+        defaultZoom={0.5}
       >
         <Background />
         <Controls position='top-right' />

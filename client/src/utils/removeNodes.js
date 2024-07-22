@@ -17,8 +17,6 @@ const removeNodes = (treeHead, nodes, edges, flowId) => {
 
   if (treeHead) {
     removeChildNodesAndEdges(treeHead);
-    // flowNodes = flowNodes.filter((n) => n.id !== treeHead['Employee Id'].toString());
-    // flowEdges = flowEdges.filter((e) => !e.id.startsWith(`${treeHead['Employee Id']}-`));
   }
 
   return {

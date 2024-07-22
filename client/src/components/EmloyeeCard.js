@@ -3,23 +3,14 @@ import { Handle, Position } from '@xyflow/react';
 import { useGlobalState } from '../utils/GlobalStateContext';
 
 const EmployeeCard = ({ isConnectable, data }) => {
-  const { expandNode, collapseNode, currentSelectedNode } = useGlobalState();
+  const {currentSelectedNode, expandNode } = useGlobalState();
   const [expanded, setExpanded] = useState(false);
   const [selectedNode, setSelectedNode] = useState(false);
   const employee = data.employee;
 
-  const expandEmployee = () => {
-    console.log('expanding employee', data);
-    if (expanded) {
-      setExpanded(false);
-      console.log('collapsing node');
-      collapseNode(employee, data.flowId);
-    } else {
-      setExpanded(true);
-      expandNode(employee, data.flowId);
-    }
-    // expandNode(employee, data.flowId);
-  };
+  const expandTrigger = () =>{
+    expandNode(employee, data.flowId);
+  }
 
   useEffect(() => {
     setSelectedNode(currentSelectedNode && currentSelectedNode['Employee Id'] === employee['Employee Id']);
@@ -29,7 +20,7 @@ const EmployeeCard = ({ isConnectable, data }) => {
     <>
       <Handle type="target" position={Position.Top} />
       <div
-        onClick={expandEmployee}
+        onClick={expandTrigger}
         className={`flex flex-col w-[15rem] h-[20rem] shadow-md rounded-md p-4 items-center ${selectedNode ? 'bg-green-100' : 'bg-white'}`}
       >
         <div className='header flex flex-col items-center'>

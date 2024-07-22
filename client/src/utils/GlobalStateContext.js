@@ -18,7 +18,7 @@ export const GlobalStateProvider = ({ children }) => {
   useEffect(() => {
     if (searchPath.length !== 0) {
       const lastNode = searchPath[searchPath.length - 1];
-      const node = nodes[currentlySelectedFlow].find((n) => n.id === lastNode['Employee Id'].toString());
+      const node = nodes.find((n) => n.id === lastNode['Employee Id'].toString());
       if (node) {
         setCurrentSelectedNode(lastNode);
         return;
@@ -45,42 +45,139 @@ export const GlobalStateProvider = ({ children }) => {
 
   }, [searchPath])
 
+  // const expandNode = (employee, flowId) => {
+  //   console.log('global state params received', employee, flowId);
+  
+  //   if (expandedNodes[flowId]) {
+  //     if (expandedNodes[flowId][employee['level']]) {
+  //       const employeeToRemove = expandedNodes[flowId][employee['level']];
+  //       console.log('employee to remove', employeeToRemove);
+  
+  //       if (employeeToRemove && employeeToRemove['Employee Id'] !== employee['Employee Id']) {
+  //         const { nodes: newNodes, edges: newEdges } = removeNodes(employeeToRemove, nodes, edges, flowId);
+  //         setNodes((currentNodes) => ({
+  //           ...currentNodes,
+  //           [flowId]: newNodes[flowId],
+  //         }));
+  //         setEdges((currentEdges) => ({
+  //           ...currentEdges,
+  //           [flowId]: newEdges[flowId],
+  //         }));
+  //       }
+  
+  //       const value = {
+  //         ...expandedNodes[flowId],
+  //         [employee['level']]: employee,
+  //       };
+  
+  //       setExpandedNodes((currentExpandedNodes) => ({
+  //         ...currentExpandedNodes,
+  //         [flowId]: value,
+  //       }));
+  
+  //       expandCard(employee, flowId);
+  
+  //     } else {
+  //       const value = {
+  //         ...expandedNodes[flowId],
+  //         [employee['level']]: employee,
+  //       };
+  //       setExpandedNodes((currentExpandedNodes) => ({
+  //         ...currentExpandedNodes,
+  //         [flowId]: value,
+  //       }));
+  
+  //       expandCard(employee, flowId);
+  //     }
+  //   } else {
+  //     const value = {
+  //       [employee['level']]: employee,
+  //     };
+  //     setExpandedNodes((currentExpandedNodes) => ({
+  //       ...currentExpandedNodes,
+  //       [flowId]: value,
+  //     }));
+  //     expandCard(employee, flowId);
+  //   }
+  // };
+  
+  // const expandCard = (employee, flowId) => {
+  //   if (employee && employee['children'].length > 0) {
+  //     const node = nodes[flowId]?.find((n) => n.id === employee['Employee Id'].toString());
+  //     if (!node) {
+  //       console.error('Node not found');
+  //       return;
+  //     }
+  //     const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position.x, node.position.y, flowId);
+  //     setNodes((currentNodes) => ({
+  //       ...currentNodes,
+  //       [flowId]: [...currentNodes[flowId], ...newNodes],
+  //     }));
+  
+  //     setEdges((currentEdges) => ({
+  //       ...currentEdges,
+  //       [flowId]: [...currentEdges[flowId], ...newEdges],
+  //     }));
+  //   }
+  // };
+
   const expandNode = (employee, flowId) => {
-    console.log('global state params received', employee, flowId);
-    expandCard(employee, flowId);
-
-  };
-
-  const expandCard = (employee, flowId) => {
-    if(employee && employee['children'].length > 0){
-      const node = nodes[flowId]?.find((n) => n.id === employee['Employee Id'].toString());
-      if (!node) {
-        console.error('Node not found');
-        return;
-      }
-      const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position.x, node.position.y , flowId);
-      setNodes((currentNodes) => ({
-        ...currentNodes,
-        [flowId]: [...currentNodes[flowId], ...newNodes],
-      }));
-
-      setEdges((currentEdges)=>(
-        {
-          ...currentEdges,
-          [flowId]: [...currentEdges[flowId], ...newEdges]
+    console.log('$$ expand trigger');
+    if (employee && employee['children'].length > 0) {
+        const employeeToRemove = expandedNodes[flowId][employee['level']];
+        if (employeeToRemove) {
+          console.log('$$ employee to remove', employeeToRemove);
+          const { nodes: adjustedNodes, edges: adjustedEdges } = removeNodes(employeeToRemove, nodes, edges, flowId);
+          setNodes((currentNodes) => ({
+            ...currentNodes,
+            [flowId]: adjustedNodes[flowId],
+          }));
+          setEdges((currentEdges) => ({
+            ...currentEdges,
+            [flowId]: adjustedEdges[flowId],
+          }));
         }
-      ));
+        const value = {
+          ...expandedNodes[flowId],
+          [employee['level']]: employee,
+        };
+
+        setExpandedNodes((currentExpandedNodes) => ({
+          ...currentExpandedNodes,
+          [flowId]: value,
+        }));
+
+        const node = nodes[flowId].find((n) => n.id === employee['Employee Id'].toString());
+        if (!node) {
+          console.error('Node not found');
+          return;
+        }
+        const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position?.x, node.position?.y, flowId);
+        setNodes((currentNodes) => ({
+          ...currentNodes,
+          [flowId]: [...currentNodes[flowId], ...newNodes],
+        }));
+        setEdges((currentEdges) => ({
+          ...currentEdges,
+          [flowId]: [...currentEdges[flowId], ...newEdges],
+        }));
+      }
+    else{
+      console.log('No children found');
     }
-  }
+  };
+  
 
 
   const collapseNode = (employee, flowId) => {
+    console.log('yay collapsing node', employee);
     const node = nodes[flowId].find((n) => n.id === employee['Employee Id'].toString());
+    console.log('yay node found', node);
     if (!node) {
       console.error('Node not found');
       return;
     }
-    // updateExpandedNodes(setExpandedNodes, employee, employee['level']);
+ 
     const { nodes: newNodes, edges: newEdges } = removeNodes(employee, nodes, edges, flowId);
     setNodes((currentNodes) => ({
       ...currentNodes,
@@ -90,7 +187,7 @@ export const GlobalStateProvider = ({ children }) => {
       ...currentEdges,
       [flowId]: newEdges[flowId],
     }));
-    // expandNode(employee, flowId);
+ 
   };
 
   return (

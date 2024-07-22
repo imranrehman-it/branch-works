@@ -29,8 +29,12 @@ const App = () => {
   return (
     <div className="App p-4 flex flex-col  w-screen items-center">
       <div className='flex flex-row w-[100%] h-full gap-4'>
-      {treeHead && (<Flow treeHead={treeHead['children'][0]} id={'2'} />)}
-         {treeHead && (<Flow treeHead={treeHead} id={'1'} />)}
+        <div className="grid grid-rows-2 grid-cols-2 gap-4 w-full h-full">
+        {treeHead && (<Flow treeHead={treeHead} id={'1'} />)}
+          {treeHead && (<Flow treeHead={treeHead['children'][0]} id={'2'} />)}
+          {treeHead && (<Flow treeHead={treeHead['children'][0]['children'][0]} id={'3'} />)}
+          {treeHead && (<Flow treeHead={treeHead} id={'4'} />)}
+        </div>
         {treeHead && (<EmployeeData treeHead={treeHead} employees={employees}/>)}
       </div>
     </div>
