@@ -7,8 +7,8 @@ import { updateExpandedNodes, appendNodesAndEdges, updateNodesAndEdges } from '.
 const GlobalStateContext = createContext();
 
 export const GlobalStateProvider = ({ children }) => {
-  const [nodes, setNodes] = useState();
-  const [edges, setEdges] = useState([]);
+  const [nodes, setNodes] = useState({});
+  const [edges, setEdges] = useState({});
   const [expandedNodes, setExpandedNodes] = useState({});
   const [currentSelectedNode, setCurrentSelectedNode] = useState(null);
   const [searchPath, setSearchPath] = useState([]);
@@ -18,7 +18,7 @@ export const GlobalStateProvider = ({ children }) => {
   useEffect(() => {
     if (searchPath.length !== 0) {
       const lastNode = searchPath[searchPath.length - 1];
-      const node = nodes.find((n) => n.id === lastNode['Employee Id'].toString());
+      const node = nodes[currentlySelectedFlow].find((n) => n.id === lastNode['Employee Id'].toString());
       if (node) {
         setCurrentSelectedNode(lastNode);
         return;

@@ -25,48 +25,95 @@ const FlowComponent = ({ treeHead, id}) => {
   useEffect(() => {
     if (treeHead) {
       const initialNode = {
-        id: "0",
+        id: treeHead['Employee Id'].toString(),
         data: { employee: treeHead },
         position: { x: 0, y: 0 },
         type: 'employeeCard',
       };
-      setNodes([initialNode]);
+
+      setNodes((currentNodes) => ({
+        ...currentNodes,
+        [id]: [initialNode],
+      }));
       const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0, 0);
-      setNodes((currentNodes) => [...currentNodes, ...newNodes]);
-      setEdges(newEdges);
+      setNodes((currentNodes) => ({
+        ...currentNodes,
+        [id]: [...currentNodes[id], ...newNodes],
+      }));
+      setEdges((currentEdges)=>(
+        {
+          ...currentEdges,
+          [id]: [...newEdges]
+        }
+      ));
     }
     setCurrentSelectedNode(treeHead);
     setExpandedNodes({ "1": treeHead });
   }, [treeHead, setCurrentSelectedNode, setExpandedNodes, setNodes, setEdges]);
-
-  useEffect(() => {
-    if (currentSelectedNode) {
-      const selectedNode = nodes.find(node => node.data.employee === currentSelectedNode);
-      if (selectedNode) {
-        //get curent zoom level
-        const zoomLevel = reactFlowInstance.getZoom();
+  
+  // useEffect(() => {
+  //   if (currentSelectedNode) {
+  //     const selectedNode = nodes[id].find(node => node.data.employee === currentSelectedNode);
+  //     if (selectedNode) {
+  //       //get curent zoom level
+  //       const zoomLevel = reactFlowInstance.getZoom();
         
-        reactFlowInstance.setCenter(selectedNode.position.x+125, selectedNode.position.y+500, { zoom: zoomLevel, animated: true, duration: 500 });
-      }
-    }
-  }, [currentSelectedNode, nodes, reactFlowInstance]);
+  //       reactFlowInstance.setCenter(selectedNode.position.x+125, selectedNode.position.y+500, { zoom: zoomLevel, animated: true, duration: 500 });
+  //     }
+  //   }
+  // }, [currentSelectedNode, nodes, reactFlowInstance]);
 
   const onNodesChange = useCallback(
-    (changes) => setNodes((currentNodes) => applyNodeChanges(changes, currentNodes)),
-    [setNodes],
+    (changes) => {
+      setNodes((currentNodes) => {
+        // Create a copy of the currentNodes to avoid direct mutation
+        const newNodes = { ...currentNodes };
+  
+        // Apply changes to the relevant node arrays
+        changes.forEach(change => {
+          const nodeId = change.id;
+  
+          if (newNodes[nodeId]) {
+            // Apply the changes to the specific node array
+            newNodes[nodeId] = applyNodeChanges([change], newNodes[nodeId]);
+          }
+        });
+  
+        return newNodes;
+      });
+    },
+    [setNodes]
   );
+  
 
   const onEdgesChange = useCallback(
-    (changes) => setEdges((currentEdges) => applyEdgeChanges(changes, currentEdges)),
-    [setEdges],
+    (changes) => {
+      setEdges((currentEdges) => {
+        // Create a copy of the currentEdges to avoid direct mutation
+        const newEdges = { ...currentEdges };
+  
+        // Apply changes to the relevant edge arrays
+        changes.forEach(change => {
+          const edgeId = change.id;
+  
+          if (newEdges[edgeId]) {
+            // Apply the changes to the specific edge array
+            newEdges[edgeId] = applyEdgeChanges([change], newEdges[edgeId]);
+          }
+        });
+  
+        return newEdges;
+      });
+    },
+    [setEdges]
   );
 
   return (
     <div className='rounded-md bg-slate-50 shadow-lg' style={{ height: '100vh', width: '84vw' }}>
       <ReactFlow
-        nodes={nodes}
+        nodes={nodes[id]}
         onNodesChange={onNodesChange}
-        edges={edges}
+        edges={edges[id]}
         onEdgesChange={onEdgesChange}
         nodeTypes={nodeTypes}
         fitView='zoomToFit'
