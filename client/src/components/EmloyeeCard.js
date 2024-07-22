@@ -9,12 +9,13 @@ const EmployeeCard = ({ isConnectable, data }) => {
   const employee = data.employee;
 
   const expandEmployee = () => {
+    console.log('expanding employee', data);
     if (expanded) {
       setExpanded(false);
       collapseNode(employee, expanded);
     } else {
       setExpanded(true);
-      expandNode(employee, expanded);
+      expandNode(employee, data.flowId);
     }
   };
 

@@ -26,7 +26,7 @@ const FlowComponent = ({ treeHead, id}) => {
     if (treeHead) {
       const initialNode = {
         id: treeHead['Employee Id'].toString(),
-        data: { employee: treeHead },
+        data: { employee: treeHead, flowId: id },
         position: { x: 0, y: 0 },
         type: 'employeeCard',
       };
@@ -35,7 +35,7 @@ const FlowComponent = ({ treeHead, id}) => {
         ...currentNodes,
         [id]: [initialNode],
       }));
-      const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0, 0);
+      const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0, 0, id);
       setNodes((currentNodes) => ({
         ...currentNodes,
         [id]: [...currentNodes[id], ...newNodes],

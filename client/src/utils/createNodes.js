@@ -1,12 +1,12 @@
 import calculateNewPosition from "./newPositionCalculation";
 
 
-const createNodesAndEdges = (parent, posX, posY, nodes, edges) => {
-      createNodes(parent, posX, posY, nodes, edges);
-      createEdges(parent, nodes, edges);
+const createNodesAndEdges = (parent, posX, posY, nodes, edges, flowId) => {
+      createNodes(parent, posX, posY, nodes, flowId);
+      createEdges(parent, edges, flowId);
 };
 
-const createEdges = (parent, nodes, edges) => {
+const createEdges = (parent, edges, flowId) => {
   if (parent && parent['children'] && Array.isArray(parent['children'])) {
     parent['children'].forEach((child) => {
       if (edges.find((edge) => edge.id === `${parent['Employee Id']}-${child['Employee Id']}`)) {
@@ -16,6 +16,7 @@ const createEdges = (parent, nodes, edges) => {
         id: `${parent['Employee Id']}-${child['Employee Id']}`,
         source: parent['Employee Id'].toString(),
         target: child['Employee Id'].toString(),
+        data: { flowId: flowId },
         animated: true,
         style : { strokeWidth: 2 }
         
@@ -24,7 +25,7 @@ const createEdges = (parent, nodes, edges) => {
   }
 };
 
-const createNodes = (parent, posX, posY, nodes) => {
+const createNodes = (parent, posX, posY, nodes, flowId) => {
   if (parent && parent['children'] && Array.isArray(parent['children'])) {
     parent['children'].forEach((child, index) => {
       const { x, y } = calculateNewPosition(posX, posY, parent['children'].length, index);
@@ -33,7 +34,7 @@ const createNodes = (parent, posX, posY, nodes) => {
       }
       nodes.push({
         id: child['Employee Id'].toString(),
-        data: { employee: child },
+        data: { employee: child, flowId: flowId },
         position: { x, y },
         type: 'employeeCard',
         hidden: false
@@ -43,16 +44,16 @@ const createNodes = (parent, posX, posY, nodes) => {
   }
 }
 
-const createNodeArray = (treeHead, posX, posY, id) => {
+const createNodeArray = (treeHead, posX, posY, flowId) => {
   if (!treeHead) {
     return { nodes: [], edges: [] };
   }
   let nodes = [];
   let edges = [];
   const { x, y } = { x: posX, y: posY };
-  createNodesAndEdges(treeHead, x, y, nodes, edges, id);
+  createNodesAndEdges(treeHead, x, y, nodes, edges, flowId);
 
-  return { nodes, edges , id};
+  return { nodes, edges };
 };
 
 //export all functions

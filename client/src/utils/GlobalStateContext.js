@@ -45,25 +45,41 @@ export const GlobalStateProvider = ({ children }) => {
 
   }, [searchPath])
 
-  const expandNode = (employee) => {
-    setCurrentSelectedNode(employee);
-    if (employee && employee['children'].length > 0) {
-        const employeeToRemove = expandedNodes[employee['level']];
-        if (employeeToRemove) {
-          const { nodes: adjustedNodes, edges: adjustedEdges } = removeNodes(employeeToRemove, nodes, edges);
-          updateNodesAndEdges(setNodes, setEdges, adjustedNodes, adjustedEdges);
+  const expandNode = (employee, flowId) => {
+    // setCurrentSelectedNode(employee);
+    // if (employee && employee['children'].length > 0) {
+    //     const employeeToRemove = expandedNodes[employee['level']];
+    //     if (employeeToRemove) {
+    //       const { nodes: adjustedNodes, edges: adjustedEdges } = removeNodes(employeeToRemove, nodes, edges);
+    //       updateNodesAndEdges(setNodes, setEdges, adjustedNodes, adjustedEdges);
+    //     }
+    //     updateExpandedNodes(setExpandedNodes, employee, employee['level']);
+    //     const node = nodes.find((n) => n.id === employee['Employee Id'].toString());
+    //     if (!node) {
+    //       console.error('Node not found');
+    //       return;
+    //     }
+    //     const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position?.x, node.position?.y);
+    //     appendNodesAndEdges(setNodes, setEdges, newNodes, newEdges);
+    //   }
+    // else{
+    //   console.log('No children found');
+    // }
+    if(employee && employee['children'].length > 0){
+      console.log('nodes in flow id', nodes[flowId]);
+      const node = nodes[flowId]?.find((n) => n.id === employee['Employee Id'].toString());
+      const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position.x, node.position.y , 0, flowId);
+      setNodes((currentNodes) => ({
+        ...currentNodes,
+        [flowId]: [...currentNodes[flowId], ...newNodes],
+      }));
+
+      setEdges((currentEdges)=>(
+        {
+          ...currentEdges,
+          [flowId]: [...currentEdges[flowId], ...newEdges]
         }
-        updateExpandedNodes(setExpandedNodes, employee, employee['level']);
-        const node = nodes.find((n) => n.id === employee['Employee Id'].toString());
-        if (!node) {
-          console.error('Node not found');
-          return;
-        }
-        const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position?.x, node.position?.y);
-        appendNodesAndEdges(setNodes, setEdges, newNodes, newEdges);
-      }
-    else{
-      console.log('No children found');
+      ));
     }
   };
 
