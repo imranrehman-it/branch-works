@@ -63,17 +63,17 @@ const FlowComponent = ({ treeHead, id}) => {
     }));
   }, [treeHead, setCurrentSelectedNode, setExpandedNodes, setNodes, setEdges]);
   
-  // useEffect(() => {
-  //   if (currentSelectedNode) {
-  //     const selectedNode = nodes[id].find(node => node.data.employee === currentSelectedNode);
-  //     if (selectedNode) {
-  //       //get curent zoom level
-  //       const zoomLevel = reactFlowInstance.getZoom();
+  useEffect(() => {
+    if (currentSelectedNode) {
+      const selectedNode = nodes[id].find(node => node.data.employee === currentSelectedNode);
+      if (selectedNode) {
+        //get curent zoom level
+        const zoomLevel = reactFlowInstance.getZoom();
         
-  //       reactFlowInstance.setCenter(selectedNode.position.x+125, selectedNode.position.y+500, { zoom: zoomLevel, animated: true, duration: 500 });
-  //     }
-  //   }
-  // }, [currentSelectedNode, nodes, reactFlowInstance]);
+        reactFlowInstance.setCenter(selectedNode.position.x+125, selectedNode.position.y+500, { zoom: zoomLevel, animated: true, duration: 500 });
+      }
+    }
+  }, [currentSelectedNode, nodes, reactFlowInstance]);
 
 
   useEffect(() => {

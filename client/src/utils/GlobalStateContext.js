@@ -19,7 +19,7 @@ export const GlobalStateProvider = ({ children }) => {
   useEffect(() => {
     if (searchPath.length !== 0) {
       const lastNode = searchPath[searchPath.length - 1];
-      const node = nodes.find((n) => n.id === lastNode['Employee Id'].toString());
+      const node = nodes[0].find((n) => n.id === lastNode['Employee Id'].toString());
       if (node) {
         setCurrentSelectedNode(lastNode);
         return;
@@ -58,6 +58,7 @@ export const GlobalStateProvider = ({ children }) => {
     
 
   const expandNode = (employee, flowId) => {
+    setCurrentSelectedNode(employee);
     console.log('$$ expand trigger');
     if (employee && employee['children'].length > 0) {
         const employeeToRemove = expandedNodes[flowId][employee['level']];
