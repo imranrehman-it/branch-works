@@ -17,6 +17,20 @@ const EmployeeCard = ({ isConnectable, data }) => {
   const createFlow = () => {
     createNewFlow(employee);
   }
+
+  const shortHandNumberConserion = (num) => {
+    if (num >= 1000000000) {
+      return (num / 1000000000).toFixed(1).replace(/\.0$/, '') + 'B';
+    }
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
+    }
+    if (num >= 1000) {
+      return (num / 1000).toFixed(1).replace(/\.0$/, '') + 'K';
+    }
+    return num;
+  }
+
   useEffect(() => {
     setIsCurrentlyExpaded(expandedNodes && expandedNodes[data.flowId][employee['level']]=== employee);
   },[expandedNodes]);
@@ -57,17 +71,14 @@ const EmployeeCard = ({ isConnectable, data }) => {
             <p className='bg-green-100 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap'>
               IC Cost: 126.7M
             </p>
-            <p className='bg-green-100 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap'>
-              Gender: Male
-            </p>
             <p className='bg-yellow-100 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap'>
               Management Cost: 154.3M
             </p>
             <p className='bg-yellow-200 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap'>
               {employee['Performance']}
             </p>
-            <p className='bg-yellow-200 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap'>
-              Total Cost: {employee['Total Cost']}
+            <p className='bg-green-200 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap'>
+              Total Cost: {shortHandNumberConserion(employee['Total Cost'])}
             </p>
           </div>
         </div>
