@@ -66,10 +66,13 @@ const EmployeeCard = ({ isConnectable, data }) => {
             <p className='bg-yellow-200 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap'>
               {employee['Performance']}
             </p>
+            <p className='bg-yellow-200 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap'>
+              Total Cost: {employee['Total Cost']}
+            </p>
           </div>
         </div>
           <p className={`${isCurrentlyExpaded ? 'bg-green-100' : 'bg-yellow-200'} w-fit px-3 py-1 z-10 h-fit rounded-full text-[1rem] font-semibold shadow-md text-nowrap absolute -bottom-2`}>
-            {employee['children'].length}
+            {employee['children'].length} / {employee['Descendant Count']}
           </p>
         
 
