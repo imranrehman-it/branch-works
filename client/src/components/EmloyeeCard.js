@@ -21,7 +21,7 @@ const EmployeeCard = ({ isConnectable, data }) => {
       <Handle type="target" position={Position.Top} />
       <div
         onClick={expandTrigger}
-        className={`flex flex-col w-[15rem] h-[20rem] shadow-md rounded-md p-4 items-center ${selectedNode ? 'bg-green-100' : 'bg-white'}`}
+        className={`flex flex-col w-[15rem] h-[20rem] shadow-md rounded-md p-4 items-center fixeds ${selectedNode ? 'bg-green-100' : 'bg-white'}`}
       >
         <div className='header flex flex-col items-center'>
           <p className='text-white text-center text-lg justify-around p-1 font-bold w-10 h-10 bg-black rounded-full absolute -translate-y-8'>
@@ -62,7 +62,7 @@ const EmployeeCard = ({ isConnectable, data }) => {
           <p className='bg-yellow-200 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap mt-2'>
             {employee['children'].length}
           </p>
-          <p onClick={()=>createNewFlow(employee)} className='bg-green-100 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap mt-2'>
+          <p onClick={()=>createNewFlow(employee)} className='bg-green-100 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap mt-2 cursor-pointer'>
             Create Sub Flow
           </p>
         </div>

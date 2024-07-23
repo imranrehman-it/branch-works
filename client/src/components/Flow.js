@@ -19,8 +19,9 @@ import searchNodeByName from '../utils/searchNode';
 const nodeTypes = { employeeCard: EmployeeCard };
 
 const FlowComponent = ({ treeHead, id}) => {
-  const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes, currentSelectedNode } = useGlobalState();
+  const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes, currentSelectedNode, flows } = useGlobalState();
   const reactFlowInstance = useReactFlow();
+  const [dimensions, setDimensions] = useState({});
 
   useEffect(() => {
     if (treeHead) {
@@ -74,6 +75,30 @@ const FlowComponent = ({ treeHead, id}) => {
   //   }
   // }, [currentSelectedNode, nodes, reactFlowInstance]);
 
+
+  useEffect(() => {
+    if(treeHead['Employee Id'] !== 0){
+      setDimensions({
+        width: '49%',
+        height: '40vh'
+      });
+    }
+    else{
+      if(flows.length > 0){
+      setDimensions({
+        width: '84vw',
+        height: '80vh'
+      });
+      }
+      else{
+        setDimensions({
+          width: '84vw',
+          height: '100vh'
+        });
+      }
+  }
+  }, [flows] );
+
   const onNodesChange = useCallback(
     (changes) => {
       setNodes((currentNodes) => {
@@ -120,7 +145,7 @@ const FlowComponent = ({ treeHead, id}) => {
   );
 
   return (
-    <div className='rounded-md bg-slate-50 shadow-lg' style={{ height: '100vh', width: '84vw' }}>
+    <div className='rounded-md bg-slate-50 shadow-lg' style={dimensions}>
       <ReactFlow
         nodes={nodes[id]}
         onNodesChange={onNodesChange}
