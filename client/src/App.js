@@ -55,7 +55,7 @@ const App = () => {
 
   return (
     <div className="App p-4 flex flex-col  w-screen items-center">
-      <div className='flex flex-row w-[100%] min-h-screen h-fit gap-4'>
+      <div className='flex flex-row w-full min-h-screen h-fit gap-4'>
         <div className={`flex flex-col w-full min-h-screen h-fit gap-4 justify-center`}>
          {treeHead && (<Flow treeHead={treeHead} id={treeHead?.id}/>)}
          <div className='flex flex-wrap w-full h-fit gap-4'>

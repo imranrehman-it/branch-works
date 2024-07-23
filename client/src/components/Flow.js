@@ -86,18 +86,18 @@ const FlowComponent = ({ treeHead, id}) => {
     else{
       if(flows.length > 0){
       setDimensions({
-        width: '84vw',
+        width: '100%',
         height: '80vh'
       });
       }
       else{
         setDimensions({
-          width: '84vw',
+          width: '100%',
           height: '100vh'
         });
       }
   }
-  }, [flows] );
+  }, [flows, treeHead] );
 
   const onNodesChange = useCallback(
     (changes) => {
