@@ -48,7 +48,7 @@ export const GlobalStateProvider = ({ children }) => {
 
   const createNewFlow = (employee) => {
     const newFlow = {
-      id: flows.length + 1,
+      id: employee['Employee Id'],
       head: employee,
     };
     setFlows((currentFlows) => [...currentFlows, newFlow]);
@@ -58,7 +58,10 @@ export const GlobalStateProvider = ({ children }) => {
     
 
   const expandNode = (employee, flowId) => {
-    setCurrentSelectedNode(employee);
+    console.log('$$% flowid', flowId);
+    if(flowId === 0){
+      setCurrentSelectedNode(employee);
+    }
     console.log('$$ expand trigger');
     if (employee && employee['children'].length > 0) {
         const employeeToRemove = expandedNodes[flowId][employee['level']];

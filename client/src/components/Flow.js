@@ -64,8 +64,12 @@ const FlowComponent = ({ treeHead, id}) => {
   }, [treeHead, setCurrentSelectedNode, setExpandedNodes, setNodes, setEdges]);
   
   useEffect(() => {
+    if(id !== 0){
+      return;
+    }
+
     if (currentSelectedNode) {
-      const selectedNode = nodes[id].find(node => node.data.employee === currentSelectedNode);
+      const selectedNode = nodes[id]?.find((node) => node.id === currentSelectedNode['Employee Id'].toString());
       if (selectedNode) {
         //get curent zoom level
         const zoomLevel = reactFlowInstance.getZoom();
@@ -80,7 +84,7 @@ const FlowComponent = ({ treeHead, id}) => {
     if(treeHead['Employee Id'] !== 0){
       setDimensions({
         width: '49%',
-        height: '40vh'
+        height: '60vh'
       });
     }
     else{
@@ -156,6 +160,7 @@ const FlowComponent = ({ treeHead, id}) => {
         maxZoom={4}
         minZoom={0.2}
         defaultZoom={0.7}
+        title='Employee Hierarchy'
       >
         <Background />
         <Controls position='top-right' />
