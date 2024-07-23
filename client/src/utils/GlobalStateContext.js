@@ -12,7 +12,8 @@ export const GlobalStateProvider = ({ children }) => {
   const [expandedNodes, setExpandedNodes] = useState({});
   const [currentSelectedNode, setCurrentSelectedNode] = useState(null);
   const [searchPath, setSearchPath] = useState([]);
-  const [currentlySelectedFlow, setCurrentlySelectedFlow] = useState();
+  const [flows, setFlows] = useState([]);
+  
 
 
   useEffect(() => {
@@ -45,81 +46,16 @@ export const GlobalStateProvider = ({ children }) => {
 
   }, [searchPath])
 
-  // const expandNode = (employee, flowId) => {
-  //   console.log('global state params received', employee, flowId);
-  
-  //   if (expandedNodes[flowId]) {
-  //     if (expandedNodes[flowId][employee['level']]) {
-  //       const employeeToRemove = expandedNodes[flowId][employee['level']];
-  //       console.log('employee to remove', employeeToRemove);
-  
-  //       if (employeeToRemove && employeeToRemove['Employee Id'] !== employee['Employee Id']) {
-  //         const { nodes: newNodes, edges: newEdges } = removeNodes(employeeToRemove, nodes, edges, flowId);
-  //         setNodes((currentNodes) => ({
-  //           ...currentNodes,
-  //           [flowId]: newNodes[flowId],
-  //         }));
-  //         setEdges((currentEdges) => ({
-  //           ...currentEdges,
-  //           [flowId]: newEdges[flowId],
-  //         }));
-  //       }
-  
-  //       const value = {
-  //         ...expandedNodes[flowId],
-  //         [employee['level']]: employee,
-  //       };
-  
-  //       setExpandedNodes((currentExpandedNodes) => ({
-  //         ...currentExpandedNodes,
-  //         [flowId]: value,
-  //       }));
-  
-  //       expandCard(employee, flowId);
-  
-  //     } else {
-  //       const value = {
-  //         ...expandedNodes[flowId],
-  //         [employee['level']]: employee,
-  //       };
-  //       setExpandedNodes((currentExpandedNodes) => ({
-  //         ...currentExpandedNodes,
-  //         [flowId]: value,
-  //       }));
-  
-  //       expandCard(employee, flowId);
-  //     }
-  //   } else {
-  //     const value = {
-  //       [employee['level']]: employee,
-  //     };
-  //     setExpandedNodes((currentExpandedNodes) => ({
-  //       ...currentExpandedNodes,
-  //       [flowId]: value,
-  //     }));
-  //     expandCard(employee, flowId);
-  //   }
-  // };
-  
-  // const expandCard = (employee, flowId) => {
-  //   if (employee && employee['children'].length > 0) {
-  //     const node = nodes[flowId]?.find((n) => n.id === employee['Employee Id'].toString());
-  //     if (!node) {
-  //       console.error('Node not found');
-  //       return;
-  //     }
-  //     const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position.x, node.position.y, flowId);
-  //     setNodes((currentNodes) => ({
-  //       ...currentNodes,
-  //       [flowId]: [...currentNodes[flowId], ...newNodes],
-  //     }));
-  
-  //     setEdges((currentEdges) => ({
-  //       ...currentEdges,
-  //       [flowId]: [...currentEdges[flowId], ...newEdges],
-  //     }));
-  //   }
-  // };
+  const createNewFlow = (employee) => {
+    const newFlow = {
+      id: flows.length + 1,
+      head: employee,
+    };
+    setFlows((currentFlows) => [...currentFlows, newFlow]);
+  };
+
+ 
+    
 
   const expandNode = (employee, flowId) => {
     console.log('$$ expand trigger');
@@ -192,7 +128,7 @@ export const GlobalStateProvider = ({ children }) => {
 
   return (
     <GlobalStateContext.Provider
-      value={{ nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes, currentSelectedNode, setCurrentSelectedNode, searchPath, setSearchPath, expandNode, collapseNode }}
+      value={{ nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes, currentSelectedNode, setCurrentSelectedNode, searchPath, setSearchPath, expandNode, collapseNode, createNewFlow, flows, setFlows }}
     >
       {children}
     </GlobalStateContext.Provider>

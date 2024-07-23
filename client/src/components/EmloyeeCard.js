@@ -3,7 +3,7 @@ import { Handle, Position } from '@xyflow/react';
 import { useGlobalState } from '../utils/GlobalStateContext';
 
 const EmployeeCard = ({ isConnectable, data }) => {
-  const {currentSelectedNode, expandNode } = useGlobalState();
+  const {currentSelectedNode, expandNode, createNewFlow } = useGlobalState();
   const [expanded, setExpanded] = useState(false);
   const [selectedNode, setSelectedNode] = useState(false);
   const employee = data.employee;
@@ -58,9 +58,16 @@ const EmployeeCard = ({ isConnectable, data }) => {
             </p>
           </div>
         </div>
-        <p className='bg-yellow-200 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap mt-2'>
-          {employee['children'].length}
-        </p>
+        <div className='flex flex-row'>
+          <p className='bg-yellow-200 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap mt-2'>
+            {employee['children'].length}
+          </p>
+          <p onClick={()=>createNewFlow(employee)} className='bg-green-100 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap mt-2'>
+            Create Sub Flow
+          </p>
+        </div>
+        
+
       </div>
       <Handle type="source" position={Position.Bottom} id="a" />
       <Handle type="source" position={Position.Bottom} id="b" isConnectable='true' />

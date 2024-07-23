@@ -26,7 +26,7 @@ const EmployeeData = ({treeHead, employees}) => {
 
 
   return (
-    <div className='bg-slate-100 shadow-lg rounded-md p-4 border-slate w-[15%] flex flex-col gap-2 max-h-screen overflow-scroll' style={glassStyle}>
+    <div className='bg-slate-100 shadow-lg rounded-md p-4 border-slate min-w-[15%] max-w-[15%] flex flex-col gap-2 max-h-screen overflow-scroll' style={glassStyle}>
         <SearchBar treeHead={treeHead} employees={employees}/>
        {currentSelectedNode && (<ContactInfo currentSelectedNode={currentSelectedNode} />)}
        {currentSelectedNode && (<CostInfo currentSelectedNode={currentSelectedNode} />)}

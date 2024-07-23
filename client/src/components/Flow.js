@@ -120,7 +120,7 @@ const FlowComponent = ({ treeHead, id}) => {
   );
 
   return (
-    <div className='rounded-md bg-slate-50 shadow-lg' style={{ height: '50vh', width: '42vw' }}>
+    <div className='rounded-md bg-slate-50 shadow-lg' style={{ height: '100vh', width: '84vw' }}>
       <ReactFlow
         nodes={nodes[id]}
         onNodesChange={onNodesChange}
@@ -130,7 +130,7 @@ const FlowComponent = ({ treeHead, id}) => {
         fitView='zoomToFit'
         maxZoom={4}
         minZoom={0.2}
-        defaultZoom={0.5}
+        defaultZoom={0.7}
       >
         <Background />
         <Controls position='top-right' />
