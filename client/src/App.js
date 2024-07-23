@@ -24,7 +24,6 @@ const App = () => {
     if (data) {
       console.log(data);
       setTreeHead(data);
-      // createNewFlow(data);
     } 
   }, [data]);
 
@@ -33,23 +32,6 @@ const App = () => {
       setEmployees(employeesData);
     }
   }, [employeesData]);
-
-  // useEffect(() => {
-  //   switch (flows.length) {
-  //     case 1:
-  //       setGridClass('grid-cols-1 grid-rows-1');
-  //       break;
-  //     case 2:
-  //       setGridClass('grid-cols-2 grid-rows-1');
-  //       break;
-  //     case 3:
-  //     case 4:
-  //       setGridClass('grid-cols-2 grid-rows-2');
-  //       break;
-  //     default:
-  //       setGridClass('grid-cols-1 grid-rows-1'); // Default to single column/row for more than 4 items
-  //   }
-  // }, [flows]);
 
 
 

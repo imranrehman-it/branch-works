@@ -76,10 +76,10 @@ const FlowComponent = ({ treeHead, id, name}) => {
         //get curent zoom level
         const zoomLevel = reactFlowInstance.getZoom();
         
-        reactFlowInstance.setCenter(selectedNode.position.x+125, selectedNode.position.y+500, { zoom: zoomLevel, animated: true, duration: 500 });
+        reactFlowInstance.setCenter(selectedNode.position.x+125, selectedNode.position.y+500, { zoom: zoomLevel, animated: true, duration: 250 });
       }
     }
-  }, [currentSelectedNode, nodes, reactFlowInstance]);
+  }, [currentSelectedNode, reactFlowInstance]);
 
 
   useEffect(() => {
@@ -155,8 +155,8 @@ const FlowComponent = ({ treeHead, id, name}) => {
   );
 
   return (
-    <div className='rounded-md bg-slate-50 shadow-lg' style={dimensions}>
-      <h1 className='absolute m-8 ml-16 z-10 text-lg font-semibold bg-blue-100 px-2 py-[0.06rem] rounded-md'>{name} Tree</h1>
+    <div className='rounded-md bg-slate-50 shadow-lg transition-all duration-1000 ' style={dimensions}>
+      <h1 className='absolute m-8 ml-16 z-10 text-lg font-semibold px-2 py-[0.06rem] rounded-md'>{name} Tree</h1>
       <IoIosCloseCircleOutline  onClick={removeCurrentFlow} className='absolute m-8 z-10 text-3xl  text-black cursor-pointer font-bold bg-red-100 px-2 rounded-md' />
       <ReactFlow
         nodes={nodes[id]}
@@ -167,7 +167,7 @@ const FlowComponent = ({ treeHead, id, name}) => {
         fitView='zoomToFit'
         maxZoom={4}
         minZoom={0.2}
-        defaultZoom={0.7}
+        defaultZoom={0.5}
         title='Employee Hierarchy'
       >
         <Background />

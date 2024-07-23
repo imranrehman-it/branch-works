@@ -31,7 +31,7 @@ const EmployeeCard = ({ isConnectable, data }) => {
       <CgArrowsExpandUpRight onClick={createFlow} className='absolute -top-1 -right-1 tra text-3xl text-black cursor-pointer font-bold z-10 bg-blue-100 p-1 rounded-md' />
       <div
         onClick={expandTrigger}
-        className={`flex flex-col w-[15rem] h-[20rem] shadow-md rounded-md p-4 items-center fixeds ${selectedNode ? 'bg-green-100' : 'bg-white'}`}
+        className={`flex flex-col w-[15rem] h-[20rem] shadow-md rounded-md p-4 items-center fixeds ${selectedNode ? 'bg-green-100' : 'bg-white'} cursor-pointer`}
       >
         <div className='header flex flex-col items-center'>
           <p className='text-white text-center text-lg justify-around p-1 font-bold w-10 h-10 bg-black rounded-full absolute -translate-y-8'>
