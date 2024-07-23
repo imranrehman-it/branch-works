@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import googleIcon from './googleicon.png';
 import { useGlobalState } from '../utils/GlobalStateContext';
+import { IoIosCloseCircleOutline } from "react-icons/io";
+
 import {
   ReactFlow,
   Controls,
@@ -19,7 +21,7 @@ import searchNodeByName from '../utils/searchNode';
 const nodeTypes = { employeeCard: EmployeeCard };
 
 const FlowComponent = ({ treeHead, id, name}) => {
-  const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes, currentSelectedNode, flows } = useGlobalState();
+  const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes, currentSelectedNode, flows, removeFlow } = useGlobalState();
   const reactFlowInstance = useReactFlow();
   const [dimensions, setDimensions] = useState({});
 
@@ -103,6 +105,10 @@ const FlowComponent = ({ treeHead, id, name}) => {
   }
   }, [flows, treeHead] );
 
+  const removeCurrentFlow = () => {
+    removeFlow(id);
+  }
+
   const onNodesChange = useCallback(
     (changes) => {
       setNodes((currentNodes) => {
@@ -150,7 +156,8 @@ const FlowComponent = ({ treeHead, id, name}) => {
 
   return (
     <div className='rounded-md bg-slate-50 shadow-lg' style={dimensions}>
-      <h1 className='absolute m-8 z-10 text-lg font-semibold bg-blue-100 px-2 rounded-md'>{name} Tree</h1>
+      <h1 className='absolute m-8 ml-16 z-10 text-lg font-semibold bg-blue-100 px-2 py-[0.06rem] rounded-md'>{name} Tree</h1>
+      <IoIosCloseCircleOutline  onClick={removeCurrentFlow} className='absolute m-8 z-10 text-3xl  text-black cursor-pointer font-bold bg-red-100 px-2 rounded-md' />
       <ReactFlow
         nodes={nodes[id]}
         onNodesChange={onNodesChange}

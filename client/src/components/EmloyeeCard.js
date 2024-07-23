@@ -3,15 +3,23 @@ import { Handle, Position } from '@xyflow/react';
 import { useGlobalState } from '../utils/GlobalStateContext';
 import { CgArrowsExpandUpRight } from "react-icons/cg";
 
+
 const EmployeeCard = ({ isConnectable, data }) => {
-  const {currentSelectedNode, expandNode, createNewFlow } = useGlobalState();
-  const [expanded, setExpanded] = useState(false);
+  const {currentSelectedNode, expandNode, createNewFlow, expandedNodes } = useGlobalState();
+  const [isCurrentlyExpaded, setIsCurrentlyExpaded] = useState(true);
   const [selectedNode, setSelectedNode] = useState(false);
   const employee = data.employee;
 
   const expandTrigger = () =>{
     expandNode(employee, data.flowId);
   }
+
+  const createFlow = () => {
+    createNewFlow(employee);
+  }
+  useEffect(() => {
+    setIsCurrentlyExpaded(expandedNodes && expandedNodes[data.flowId][employee['level']]=== employee);
+  },[expandedNodes]);
 
   useEffect(() => {
     setSelectedNode(currentSelectedNode && currentSelectedNode['Employee Id'] === employee['Employee Id']);
@@ -20,7 +28,7 @@ const EmployeeCard = ({ isConnectable, data }) => {
   return (
     <>
       <Handle type="target" position={Position.Top} />
-      <CgArrowsExpandUpRight className='absolute -top-1 -right-1 tra text-3xl text-black cursor-pointer font-bold z-10 bg-blue-100 p-1 rounded-md' onClick={expandTrigger} />
+      <CgArrowsExpandUpRight onClick={createFlow} className='absolute -top-1 -right-1 tra text-3xl text-black cursor-pointer font-bold z-10 bg-blue-100 p-1 rounded-md' />
       <div
         onClick={expandTrigger}
         className={`flex flex-col w-[15rem] h-[20rem] shadow-md rounded-md p-4 items-center fixeds ${selectedNode ? 'bg-green-100' : 'bg-white'}`}
@@ -60,11 +68,9 @@ const EmployeeCard = ({ isConnectable, data }) => {
             </p>
           </div>
         </div>
-        <div className='flex flex-row'>
-          <p className='bg-yellow-200 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap mt-2'>
+          <p className={`${isCurrentlyExpaded ? 'bg-green-100' : 'bg-yellow-200'} w-fit px-3 py-1 z-10 h-fit rounded-full text-[1rem] font-semibold shadow-md text-nowrap absolute -bottom-2`}>
             {employee['children'].length}
           </p>
-        </div>
         
 
       </div>

@@ -20,6 +20,10 @@ export const GlobalStateProvider = ({ children }) => {
     setFlows((currentFlows) => [...currentFlows, newFlow]);
   };
 
+  const removeFlow = (flowId) => {
+    setFlows((currentFlows) => currentFlows.filter((flow) => flow.id !== flowId));
+  };
+
   const updateNodeState = (employee, flowId) => {
     const node = nodes[flowId]?.find((n) => n.id === employee['Employee Id'].toString());
     if (!node) {
@@ -153,7 +157,7 @@ export const GlobalStateProvider = ({ children }) => {
 
   return (
     <GlobalStateContext.Provider
-      value={{ nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes, currentSelectedNode, setCurrentSelectedNode, searchPath, setSearchPath, expandNode, collapseNode, createNewFlow, flows, setFlows }}
+      value={{ nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes, currentSelectedNode, setCurrentSelectedNode, searchPath, setSearchPath, expandNode, collapseNode, createNewFlow, flows, setFlows, removeFlow }}
     >
       {children}
     </GlobalStateContext.Provider>
