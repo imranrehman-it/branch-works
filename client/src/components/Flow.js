@@ -18,7 +18,7 @@ import searchNodeByName from '../utils/searchNode';
 
 const nodeTypes = { employeeCard: EmployeeCard };
 
-const FlowComponent = ({ treeHead, id}) => {
+const FlowComponent = ({ treeHead, id, name}) => {
   const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes, currentSelectedNode, flows } = useGlobalState();
   const reactFlowInstance = useReactFlow();
   const [dimensions, setDimensions] = useState({});
@@ -150,6 +150,7 @@ const FlowComponent = ({ treeHead, id}) => {
 
   return (
     <div className='rounded-md bg-slate-50 shadow-lg' style={dimensions}>
+      <h1 className='absolute p-8 z-10 text-lg font-semibold'>{name} Tree</h1>
       <ReactFlow
         nodes={nodes[id]}
         onNodesChange={onNodesChange}
@@ -169,9 +170,9 @@ const FlowComponent = ({ treeHead, id}) => {
   );
 };
 
-const Flow = ({ treeHead, id }) => (
+const Flow = ({ treeHead, id, name }) => (
   <ReactFlowProvider>
-    <FlowComponent treeHead={treeHead} id={id} />
+    <FlowComponent treeHead={treeHead} id={id} name={name} />
   </ReactFlowProvider>
 );
 

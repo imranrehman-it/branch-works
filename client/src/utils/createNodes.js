@@ -26,6 +26,10 @@ const createEdges = (parent, edges, flowId) => {
 };
 
 const createNodes = (parent, posX, posY, nodes, flowId) => {
+  //check if parent children already exist in nodes
+  if (nodes.find((node) => node.id === parent['Employee Id'].toString())) {
+    return;
+  }
   if (parent && parent['children'] && Array.isArray(parent['children'])) {
     parent['children'].forEach((child, index) => {
       const { x, y } = calculateNewPosition(posX, posY, parent['children'].length, index);
