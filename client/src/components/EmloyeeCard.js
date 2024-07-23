@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import { useGlobalState } from '../utils/GlobalStateContext';
+import { CgArrowsExpandUpRight } from "react-icons/cg";
 
 const EmployeeCard = ({ isConnectable, data }) => {
   const {currentSelectedNode, expandNode, createNewFlow } = useGlobalState();
@@ -19,6 +20,7 @@ const EmployeeCard = ({ isConnectable, data }) => {
   return (
     <>
       <Handle type="target" position={Position.Top} />
+      <CgArrowsExpandUpRight className='absolute -top-1 -right-1 tra text-3xl text-black cursor-pointer font-bold z-10 bg-blue-100 p-1 rounded-md' onClick={expandTrigger} />
       <div
         onClick={expandTrigger}
         className={`flex flex-col w-[15rem] h-[20rem] shadow-md rounded-md p-4 items-center fixeds ${selectedNode ? 'bg-green-100' : 'bg-white'}`}
@@ -61,9 +63,6 @@ const EmployeeCard = ({ isConnectable, data }) => {
         <div className='flex flex-row'>
           <p className='bg-yellow-200 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap mt-2'>
             {employee['children'].length}
-          </p>
-          <p onClick={()=>createNewFlow(employee)} className='bg-green-100 w-fit h-fit px-2 py-1 rounded-full text-[0.6rem] font-semibold shadow-md text-nowrap mt-2 cursor-pointer'>
-            Create Sub Flow
           </p>
         </div>
         

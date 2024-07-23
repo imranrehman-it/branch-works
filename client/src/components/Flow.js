@@ -150,7 +150,7 @@ const FlowComponent = ({ treeHead, id, name}) => {
 
   return (
     <div className='rounded-md bg-slate-50 shadow-lg' style={dimensions}>
-      <h1 className='absolute p-8 z-10 text-lg font-semibold'>{name} Tree</h1>
+      <h1 className='absolute m-8 z-10 text-lg font-semibold bg-blue-100 px-2 rounded-md'>{name} Tree</h1>
       <ReactFlow
         nodes={nodes[id]}
         onNodesChange={onNodesChange}
