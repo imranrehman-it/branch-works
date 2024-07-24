@@ -1,5 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
-import googleIcon from './googleicon.png';
 import { useGlobalState } from '../utils/GlobalStateContext';
 import { IoIosCloseCircleOutline } from "react-icons/io";
 
@@ -16,7 +16,6 @@ import '@xyflow/react/dist/style.css';
 
 import EmployeeCard from './EmloyeeCard';
 import { createNodeArray } from '../utils/createNodes';
-import searchNodeByName from '../utils/searchNode';
 
 const nodeTypes = { employeeCard: EmployeeCard };
 

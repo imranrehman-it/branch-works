@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { createNodeArray } from './createNodes';
 import removeNodes from './removeNodes';
@@ -13,11 +14,10 @@ export const GlobalStateProvider = ({ children }) => {
   const [flows, setFlows] = useState([]);
 
   const createNewFlow = (employee) => {
-    const newFlow = {
+    setFlows((currentFlows) => [...currentFlows, {
       id: employee['Employee Id'],
       head: employee,
-    };
-    setFlows((currentFlows) => [...currentFlows, newFlow]);
+    }]);
   };
 
   const removeFlow = (flowId) => {
@@ -45,7 +45,6 @@ export const GlobalStateProvider = ({ children }) => {
   };
 
   const expandNode = (employee, flowId) => {
-    console.log('$$% flowid', flowId);
     if (flowId === 0) {
       setCurrentSelectedNode(employee);
     }
@@ -82,7 +81,6 @@ export const GlobalStateProvider = ({ children }) => {
   };
 
   const collapseNode = (employee, flowId) => {
-    console.log('yay collapsing node', employee);
     const node = nodes[flowId]?.find((n) => n.id === employee['Employee Id'].toString());
     if (!node) {
       console.error('Node not found');
@@ -101,8 +99,6 @@ export const GlobalStateProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log('search path', searchPath);
-    
     if (searchPath.length > 0) {
       const lastEmployee = searchPath[searchPath.length - 1];
       const node = nodes[0]?.find((n) => n.id === lastEmployee['Employee Id'].toString());
@@ -111,36 +107,26 @@ export const GlobalStateProvider = ({ children }) => {
         setCurrentSelectedNode(lastEmployee);
         return;
       }
-      
-      // Collapse the first employee in the searchPath if the last one is already found
+
       collapseNode(searchPath[0], 0);
       const newExpandedNodes = { ...expandedNodes[0] };
-      searchPath.forEach((employee) => {
-        const value = {
-          ...expandedNodes[0],
-          [employee['level']]: employee,
-        };
 
+      searchPath.forEach((employee) => {
         newExpandedNodes[employee['level']] = employee;
-        
+
         setNodes((currentNodes) => {
           const node = currentNodes[0]?.find((n) => n.id === employee['Employee Id'].toString());
           if (!node) {
             return currentNodes;
           }
-          
           setCurrentSelectedNode(employee);
-    
-
           const { nodes: newNodes, edges: newEdges } = createNodeArray(employee, node.position?.x, node.position?.y, 0);
 
-          // Update edges state
           setEdges((currentEdges) => {
             const updatedEdges = [...(currentEdges[0] || []), ...newEdges];
             return { ...currentEdges, 0: updatedEdges };
           });
-
-          // Update nodes state
+          
           return {
             ...currentNodes,
             [0]: [...(currentNodes[0] || []), ...newNodes],
@@ -157,7 +143,23 @@ export const GlobalStateProvider = ({ children }) => {
 
   return (
     <GlobalStateContext.Provider
-      value={{ nodes, setNodes, edges, setEdges, expandedNodes, setExpandedNodes, currentSelectedNode, setCurrentSelectedNode, searchPath, setSearchPath, expandNode, collapseNode, createNewFlow, flows, setFlows, removeFlow }}
+      value={
+        { nodes, 
+          setNodes, 
+          edges, 
+          setEdges, 
+          expandedNodes, 
+          setExpandedNodes, 
+          currentSelectedNode, 
+          setCurrentSelectedNode, 
+          searchPath, 
+          setSearchPath, 
+          expandNode, 
+          collapseNode, 
+          createNewFlow, 
+          flows, 
+          setFlows, 
+          removeFlow }}
     >
       {children}
     </GlobalStateContext.Provider>

@@ -1,10 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import { useGlobalState } from '../utils/GlobalStateContext';
 import { CgArrowsExpandUpRight } from "react-icons/cg";
 
 
-const EmployeeCard = ({ isConnectable, data }) => {
+const EmployeeCard = ({ data }) => {
   const {currentSelectedNode, expandNode, createNewFlow, expandedNodes } = useGlobalState();
   const [isCurrentlyExpaded, setIsCurrentlyExpaded] = useState(true);
   const [selectedNode, setSelectedNode] = useState(false);

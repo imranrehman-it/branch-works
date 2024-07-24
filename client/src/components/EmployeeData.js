@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useGlobalState } from '../utils/GlobalStateContext';
-
 import ContactInfo from './EmployeeDataComponenets/ContactInfo';
 import CostInfo from './EmployeeDataComponenets/CostInfo';
 import BusinessInfo from './EmployeeDataComponenets/BusinessInfo';
@@ -9,7 +8,7 @@ import MetricSelection from './EmployeeDataComponenets/MetricSelection';
 import SearchBar from './SearchBar';
 
 const EmployeeData = ({ treeHead, employees }) => {
-  const { currentSelectedNode, expandedNodes } = useGlobalState();
+  const { currentSelectedNode} = useGlobalState();
 
   const glassStyle = {
     borderRadius: '16px',
@@ -18,10 +17,6 @@ const EmployeeData = ({ treeHead, employees }) => {
     WebkitBackdropFilter: 'blur(10.1px)',
     border: '1px solid rgba(255, 255, 255, 0.3)',
   };
-
-  useEffect(() => {
-    console.log('currentSelectedNode', currentSelectedNode);
-  }, [expandedNodes]);
 
   return (
     <div

@@ -9,12 +9,11 @@ import EmployeeData from './components/EmployeeData';
 
 
 const App = () => {
-  const {createNewFlow, flows} = useGlobalState();
+  const { flows} = useGlobalState();
   const { data , loading, error } = useFetchEmployeeTree();
   const { data: employeesData, loading: employeesLoading, error: employeesError } = useFetchEmployees();
   const [treeHead, setTreeHead] = useState(null);
   const [employees, setEmployees] = useState([]);
-  const [gridClass, setGridClass] = useState('');
 
 
 
