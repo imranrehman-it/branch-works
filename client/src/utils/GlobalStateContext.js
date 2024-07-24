@@ -129,7 +129,7 @@ export const GlobalStateProvider = ({ children }) => {
           
           return {
             ...currentNodes,
-            [0]: [...(currentNodes[0] || []), ...newNodes],
+            0: [...(currentNodes[0] || []), ...newNodes],
           };
         });
       });

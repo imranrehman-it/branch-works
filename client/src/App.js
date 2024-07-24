@@ -10,8 +10,8 @@ import EmployeeData from './components/EmployeeData';
 
 const App = () => {
   const { flows} = useGlobalState();
-  const { data , loading, error } = useFetchEmployeeTree();
-  const { data: employeesData, loading: employeesLoading, error: employeesError } = useFetchEmployees();
+  const { data , error } = useFetchEmployeeTree();
+  const { data: employeesData, error: employeesError } = useFetchEmployees();
   const [treeHead, setTreeHead] = useState(null);
   const [employees, setEmployees] = useState([]);
 
@@ -24,13 +24,19 @@ const App = () => {
       console.log(data);
       setTreeHead(data);
     } 
-  }, [data]);
+    else if (error) {
+      console.error(error);
+    }
+  }, [data, error]);
 
   useEffect(() => {
     if (employeesData) {
       setEmployees(employeesData);
     }
-  }, [employeesData]);
+    else if (employeesError) {
+      console.error(employeesError);
+    }
+  }, [employeesData, employeesError]);
 
 
 
