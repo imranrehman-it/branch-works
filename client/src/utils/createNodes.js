@@ -41,7 +41,7 @@ const createNodes = (parent, posX, posY, nodes, flowId) => {
         data: { employee: child, flowId: flowId },
         position: { x, y },
         type: 'employeeCard',
-        hidden: false
+        hidden: false,
       });
     });
      
