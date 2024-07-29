@@ -4,7 +4,7 @@
 
 Welcome to the Organizational Planning Tool, a web application designed to help you manage your organization through a beautifully designed tree interface. Each employee is displayed as a card showing specific data such as name, job title, salary, and more. Additionally, it displays recursively computed values including the total cost (sum of all salaries of subordinates), number of children, total number of descendants, and other key metrics.
 
-https://www.loom.com/share/a8e0c7a259104ab0926d1d4407b0d52e?sid=c99669c9-e9a3-49c3-b3df-9549769588c3
+![Demo GIF](./orgtree.gif)
 
 ## Features
 
