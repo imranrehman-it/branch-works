@@ -4,7 +4,7 @@ import { useGlobalState } from '../utils/GlobalStateContext';
 import Modal from './Modal';
 
 const CreateEmployee = ({ data }) => {
-  const { nodes, expandNode } = useGlobalState();
+  const { nodes, expandedNodes, setExpandedNodes, expandNode } = useGlobalState();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [employeeId, setEmployeeId] = useState('');
   const [name, setName] = useState('');
@@ -105,19 +105,22 @@ const CreateEmployee = ({ data }) => {
 
   const handleSave = async (e) => {
     e.preventDefault();
-    try{
+    try {
       const employee = await insertEmployee();
       employee.children = [];
       employee['Total Descendants'] = 0;
       employee['Total Cost'] = 0;
       data.parent.children.push(employee);
       expandNode(data.parent, 0);
+      Object.keys(nodes).forEach((flow) => {
+        expandNode(data.parent, flow);
+      });
       setIsModalOpen(false);
-    }
-    catch (error){
+    } catch (error) {
       console.log(error);
     }
   };
+  
     
   return (
     <>
@@ -134,6 +137,7 @@ const CreateEmployee = ({ data }) => {
         onClose={() => setIsModalOpen(false)} 
         handleSave={handleSave}
         state={state}
+        parent={data.parent}
       />
     </>
   );
