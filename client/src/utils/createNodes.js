@@ -43,7 +43,11 @@ const createNodes = (parent, posX, posY, nodes, flowId) => {
         type: 'employeeCard',
         hidden: false,
       });
-    });
+    });  
+  }
+ 
+  if(parent['children'].length > 0)
+  {
     let { x, y } = calculateNewPosition(posX, posY, parent['children'].length, parent['children'].length);
     nodes.push({
       id: 'line',
@@ -52,8 +56,20 @@ const createNodes = (parent, posX, posY, nodes, flowId) => {
       type: 'createEmployee',
       hidden: false,
     });
-     
   }
+  else{
+    let { x, y } = calculateNewPosition(posX, posY, 0, 0);
+    x = x-125;
+    nodes.push({
+      id: 'line',
+      data: {parent: parent},
+      position: { x, y },
+      type: 'createEmployee',
+      hidden: false,
+    });
+  
+  }
+  
 }
 
 

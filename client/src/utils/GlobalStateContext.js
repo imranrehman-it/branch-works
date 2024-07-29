@@ -65,7 +65,7 @@ export const GlobalStateProvider = ({ children }) => {
         }));
       }
 
-    if (employee && employee['children']?.length > 0) {
+  
       const value = {
         ...expandedNodes[flowId],
         [employee['level']]: employee,
@@ -77,16 +77,7 @@ export const GlobalStateProvider = ({ children }) => {
       }));
 
       updateNodeState(employee, flowId);
-    } else {
-      const value = {
-        ...expandedNodes[flowId],
-        [employee['level']]: employee,
-      };
-      setExpandedNodes((currentExpandedNodes) => ({
-        ...currentExpandedNodes,
-        [flowId]: value,
-      }));
-    }
+ 
   };
 
   const collapseNode = (employee, flowId) => {

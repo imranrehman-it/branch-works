@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import { useGlobalState } from '../utils/GlobalStateContext';
-import calculateNewPosition from '../utils/newPositionCalculation.js';
 import Modal from './Modal';
 
 const CreateEmployee = ({ data }) => {
@@ -110,6 +109,8 @@ const CreateEmployee = ({ data }) => {
       const parent = nodes[0].find((node) => node.id === data.parent['Employee Id'].toString());
       const employee = await insetEmployee();
       employee.children = [];
+      employee['Total Descendants'] = 0;
+      employee['Total Cost'] = 0;
       
       
       data.parent.children.push(employee);
