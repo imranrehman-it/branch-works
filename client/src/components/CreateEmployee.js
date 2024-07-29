@@ -27,7 +27,7 @@ const CreateEmployee = ({data}) => {
             "Entity": "Agentnoon EU Inc.",
             "Skill": "Creative Strategy",
             "Source": "Recruitee",
-            "level": 1,
+            "level": data.parent['level'] + 1,
             "Business Pillar": "Expertise and Knowledge",
             "Business Sector": "Manufacturing",
             "Job Family": "Customer Operational Control",
@@ -72,14 +72,7 @@ const CreateEmployee = ({data}) => {
         };
 
        data.parent.children.push(employee);
-         setNodes((currentNodes) => ({
-          ...currentNodes,
-          0: [...currentNodes[0], newEmployee],
-        }));
-        setEdges((currentEdges) => ({
-          ...currentEdges,
-          0: [...currentEdges[0], newEdges],
-        }));
+       expandNode(data.parent, 0);
 
     }
   return (
