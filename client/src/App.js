@@ -1,29 +1,26 @@
 // App.js
 import React, { useState, useEffect } from 'react';
-import { useGlobalState } from './utils/GlobalStateContext';
 import useFetchEmployeeTree from './hooks/fetchEmployeeTree';
 import useFetchEmployees from './hooks/fetchEmloyees';
 import Flow from './components/Flow';
 import EmployeeData from './components/EmployeeData';
+import { useFlows } from './context/FlowsContext';
 
 
 
 const App = () => {
-  const { flows, headTree, setHeadTree} = useGlobalState();
+  const { flows} = useFlows();
   const { data , error } = useFetchEmployeeTree();
   const { data: employeesData, error: employeesError } = useFetchEmployees();
   const [treeHead, setTreeHead] = useState(null);
   const [employees, setEmployees] = useState([]);
 
-
+ 
 
 
   useEffect(() => {
-    console.log('data changed', data);
     if (data) {
-      console.log(data);
       setTreeHead(data);
-      setHeadTree(data);
     } 
     else if (error) {
       console.error(error);

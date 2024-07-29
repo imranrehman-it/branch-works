@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react'
-import { useGlobalState } from '../../utils/GlobalStateContext';
 import RowItem from './RowItem';
+import { useNodes } from '../../context/NodeContext';
 
 const HiearchyInfo = () => {
-    const {expandedNodes} = useGlobalState();
+    const {expandedNodes} = useNodes();
 
     useEffect(() => {
         console.log('$$% expandedNodes', expandedNodes)

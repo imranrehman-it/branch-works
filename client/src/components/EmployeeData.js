@@ -1,14 +1,15 @@
 import React from 'react';
-import { useGlobalState } from '../utils/GlobalStateContext';
 import ContactInfo from './EmployeeDataComponenets/ContactInfo';
 import CostInfo from './EmployeeDataComponenets/CostInfo';
 import BusinessInfo from './EmployeeDataComponenets/BusinessInfo';
 import HiearchyInfo from './EmployeeDataComponenets/HiearchyInfo';
 import MetricSelection from './EmployeeDataComponenets/MetricSelection';
 import SearchBar from './SearchBar';
+import { useNodes } from '../context/NodeContext';
+
 
 const EmployeeData = ({ treeHead, employees, nodes }) => {
-  const { currentSelectedNode} = useGlobalState();
+  const { currentSelectedNode} = useNodes();
 
   const glassStyle = {
     borderRadius: '16px',

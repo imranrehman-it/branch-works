@@ -44,7 +44,6 @@ app.get('/allEmployees', async (req, res) => {
 
 app.post('/insertEmployee', async (req, res) => {
   console.log('Hit endpoint /insertEmployee');
-  console.log('req.body:', req.body); // Logging req.body
   const data = req.body.employee;
   try {
     const result = await createEmployee(data);
@@ -55,7 +54,7 @@ app.post('/insertEmployee', async (req, res) => {
   }
 });
 
-// Start the server
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

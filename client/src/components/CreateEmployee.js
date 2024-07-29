@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Handle, Position } from '@xyflow/react';
-import { useGlobalState } from '../utils/GlobalStateContext';
 import Modal from './Modal';
+import {useNodes} from '../context/NodeContext';
 
 const CreateEmployee = ({ data }) => {
-  const { nodes, expandedNodes, setExpandedNodes, expandNode } = useGlobalState();
+  const { nodes, expandNode } = useNodes();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [employeeId, setEmployeeId] = useState('');
   const [name, setName] = useState('');

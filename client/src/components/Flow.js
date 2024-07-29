@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
-import { useGlobalState } from '../utils/GlobalStateContext';
 import { IoIosCloseCircleOutline } from "react-icons/io";
+import { useNodes } from '../context/NodeContext';
+import { useFlows } from '../context/FlowsContext';
 
 import {
   ReactFlow,
@@ -21,28 +22,26 @@ import { createNodeArray } from '../utils/createNodes';
 const nodeTypes = { employeeCard: EmployeeCard, createEmployee: CreateEmployee };
 
 const FlowComponent = ({ treeHead, id, name}) => {
-  const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes, currentSelectedNode, flows, removeFlow } = useGlobalState();
+  const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes, currentSelectedNode,} = useNodes();
+  const {flows, removeFlow } = useFlows();
   const reactFlowInstance = useReactFlow();
   const [dimensions, setDimensions] = useState({});
 
   useEffect(() => {
     if (treeHead) {
-      const initialNode = {
+
+      const headNode = {
         id: treeHead['Employee Id'].toString(),
         data: { employee: treeHead, flowId: id },
         position: { x: 0, y: 0 },
         type: 'employeeCard',
       };
 
-      setNodes((currentNodes) => ({
-        ...currentNodes,
-        [id]: [initialNode],
-      }));
       const { nodes: newNodes, edges: newEdges } = createNodeArray(treeHead, 0, 0, id);
       setNodes((currentNodes) => ({
         ...currentNodes,
-        [id]: [...currentNodes[id], ...newNodes],
-      }));
+        [id]: [headNode, ...(currentNodes[id] || []), ...newNodes],
+      }));      
       setEdges((currentEdges)=>(
         {
           ...currentEdges,
@@ -58,7 +57,6 @@ const FlowComponent = ({ treeHead, id, name}) => {
           [treeHead['level']]: treeHead
         }
     }
-    console.log('init value', initValue);
     setExpandedNodes((currentExpandedNodes) => ({
       ...currentExpandedNodes,
       ...initValue  
@@ -73,9 +71,7 @@ const FlowComponent = ({ treeHead, id, name}) => {
     if (currentSelectedNode) {
       const selectedNode = nodes[id]?.find((node) => node.id === currentSelectedNode['Employee Id'].toString());
       if (selectedNode) {
-        //get curent zoom level
         const zoomLevel = reactFlowInstance.getZoom();
-        
         reactFlowInstance.setCenter(selectedNode.position.x+125, selectedNode.position.y+500, { zoom: zoomLevel, animated: true, duration: 250 });
       }
     }
@@ -112,15 +108,12 @@ const FlowComponent = ({ treeHead, id, name}) => {
   const onNodesChange = useCallback(
     (changes) => {
       setNodes((currentNodes) => {
-        // Create a copy of the currentNodes to avoid direct mutation
         const newNodes = { ...currentNodes };
   
-        // Apply changes to the relevant node arrays
         changes.forEach(change => {
           const nodeId = change.id;
   
           if (newNodes[nodeId]) {
-            // Apply the changes to the specific node array
             newNodes[nodeId] = applyNodeChanges([change], newNodes[nodeId]);
           }
         });
@@ -135,15 +128,14 @@ const FlowComponent = ({ treeHead, id, name}) => {
   const onEdgesChange = useCallback(
     (changes) => {
       setEdges((currentEdges) => {
-        // Create a copy of the currentEdges to avoid direct mutation
+
         const newEdges = { ...currentEdges };
-  
-        // Apply changes to the relevant edge arrays
+
         changes.forEach(change => {
           const edgeId = change.id;
   
           if (newEdges[edgeId]) {
-            // Apply the changes to the specific edge array
+
             newEdges[edgeId] = applyEdgeChanges([change], newEdges[edgeId]);
           }
         });

@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useGlobalState } from '../utils/GlobalStateContext';
 import { FaSearch } from "react-icons/fa";
 import searchNodeByName  from '../utils/searchNode';
+import { useSearch } from '../context/SearchContext';
 
 const SearchBar = ({ treeHead }) => {
   const [search, setSearch] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState(search); // State for debounced value
-  const { setSearchPath } = useGlobalState();
+  const [debouncedSearch, setDebouncedSearch] = useState(search); 
+  const { setSearchPath } = useSearch();
   const [searchFailed, setSearchFailed] = useState(false);
   const [possibleResults, setPossibleResults] = useState([]);
 
-  
-
-  useEffect(() => {
-    console.log('treeHead', treeHead);
-  }, [treeHead]);
 
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearch(search);
-    }, 1000); // 2 seconds delay
+    }, 1000); 
 
     return () => {
       clearTimeout(handler);
@@ -40,7 +35,7 @@ const SearchBar = ({ treeHead }) => {
       handleSearchSubmit(event);
     }
   };
-
+  
   const filterPossibleResults = (node) => {
     if (!node) {
       return;
@@ -68,7 +63,6 @@ const SearchBar = ({ treeHead }) => {
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    console.log('search', search);
     const results = searchNodeByName(treeHead, search);
     setSearchPath(results);
     if (results.length === 0) {
