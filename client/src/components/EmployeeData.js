@@ -7,7 +7,7 @@ import HiearchyInfo from './EmployeeDataComponenets/HiearchyInfo';
 import MetricSelection from './EmployeeDataComponenets/MetricSelection';
 import SearchBar from './SearchBar';
 
-const EmployeeData = ({ treeHead, employees }) => {
+const EmployeeData = ({ treeHead, employees, nodes }) => {
   const { currentSelectedNode} = useGlobalState();
 
   const glassStyle = {

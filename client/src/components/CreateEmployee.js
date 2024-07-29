@@ -43,7 +43,7 @@ const CreateEmployee = ({ data }) => {
     setWorkShift,
   };
 
-  const insetEmployee = async () => {
+  const insertEmployee = async () => {
     const employee = {
       "Employee Id": employeeId,
       "Name": name,
@@ -106,17 +106,13 @@ const CreateEmployee = ({ data }) => {
   const handleSave = async (e) => {
     e.preventDefault();
     try{
-      const parent = nodes[0].find((node) => node.id === data.parent['Employee Id'].toString());
-      const employee = await insetEmployee();
+      const employee = await insertEmployee();
       employee.children = [];
       employee['Total Descendants'] = 0;
       employee['Total Cost'] = 0;
-      
-      
       data.parent.children.push(employee);
       expandNode(data.parent, 0);
       setIsModalOpen(false);
-
     }
     catch (error){
       console.log(error);
