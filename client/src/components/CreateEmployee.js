@@ -91,7 +91,6 @@ const CreateEmployee = ({ data }) => {
         }),
       });
       const data = await response.json();
-      console.log(data);
       return data;
 
     }
@@ -126,7 +125,7 @@ const CreateEmployee = ({ data }) => {
     <>
       <Handle type="source" position={Position.Bottom} />
       <div className="flex flex-col w-[15rem] h-[20rem] bg-white shadow-md rounded-md p-4 items-center">
-        <p className='text-center text-xl p-1 font-bold '>Create New Employee</p>
+        <p className='text-center text-xl p-1 font-bold '>Add Employee</p>
         <div className='flex flex-col items-center justify-center h-full'>
           <button onClick={handleClick} className='text-white text-center text-lg justify-around p-1 font-bold w-12 h-12 bg-black rounded-full'>+</button>
         </div>
