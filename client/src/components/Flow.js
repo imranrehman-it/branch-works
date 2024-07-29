@@ -15,9 +15,10 @@ import {
 import '@xyflow/react/dist/style.css';
 
 import EmployeeCard from './EmloyeeCard';
+import CreateEmployee from './CreateEmployee';
 import { createNodeArray } from '../utils/createNodes';
 
-const nodeTypes = { employeeCard: EmployeeCard };
+const nodeTypes = { employeeCard: EmployeeCard, createEmployee: CreateEmployee };
 
 const FlowComponent = ({ treeHead, id, name}) => {
   const { nodes, setNodes, edges, setEdges, setCurrentSelectedNode, setExpandedNodes, currentSelectedNode, flows, removeFlow } = useGlobalState();

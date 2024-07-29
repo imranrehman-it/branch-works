@@ -44,9 +44,19 @@ const createNodes = (parent, posX, posY, nodes, flowId) => {
         hidden: false,
       });
     });
+    let { x, y } = calculateNewPosition(posX, posY, parent['children'].length, parent['children'].length);
+    nodes.push({
+      id: 'line',
+      data: {parent: parent},
+      position: { x, y },
+      type: 'createEmployee',
+      hidden: false,
+    });
      
   }
 }
+
+
 
 const createNodeArray = (treeHead, posX, posY, flowId) => {
   console.log('flow id received', flowId);

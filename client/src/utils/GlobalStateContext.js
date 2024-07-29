@@ -12,6 +12,7 @@ export const GlobalStateProvider = ({ children }) => {
   const [currentSelectedNode, setCurrentSelectedNode] = useState(null);
   const [searchPath, setSearchPath] = useState([]);
   const [flows, setFlows] = useState([]);
+  const [headTree, setHeadTree] = useState(null);
 
   const createNewFlow = (employee) => {
     setFlows((currentFlows) => [...currentFlows, {
@@ -159,7 +160,9 @@ export const GlobalStateProvider = ({ children }) => {
           createNewFlow, 
           flows, 
           setFlows, 
-          removeFlow }}
+          removeFlow,
+          headTree,
+          setHeadTree}}
     >
       {children}
     </GlobalStateContext.Provider>

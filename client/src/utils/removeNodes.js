@@ -3,15 +3,19 @@ const removeNodes = (treeHead, nodes, edges, flowId) => {
   let flowEdges = edges[flowId] || [];
 
   const removeChildNodesAndEdges = (node) => {
+    console.log('node to remove', node);
     if (node.children && node.children.length > 0) {
       node.children.forEach((child) => {
         removeChildNodesAndEdges(child);
-        flowNodes = flowNodes.filter((n) => n.id !== child['Employee Id'].toString());
+        flowNodes = flowNodes.filter((n) => n.id !== child['Employee Id'].toString() && n.id !== 'line');
         flowEdges = flowEdges.filter((e) => !e.id.startsWith(`${node['Employee Id']}-`));
       });
     } else {
+
+      // flowNodes = flowNodes.filter((n) => n.id !== node['Employee Id'].toString() && n.id !== 'line');
       flowNodes = flowNodes.filter((n) => n.id !== node['Employee Id'].toString());
       flowEdges = flowEdges.filter((e) => !e.id.startsWith(`${node['Employee Id']}-`));
+
     }
   };
 

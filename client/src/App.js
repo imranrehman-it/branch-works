@@ -9,7 +9,7 @@ import EmployeeData from './components/EmployeeData';
 
 
 const App = () => {
-  const { flows} = useGlobalState();
+  const { flows, headTree, setHeadTree} = useGlobalState();
   const { data , error } = useFetchEmployeeTree();
   const { data: employeesData, error: employeesError } = useFetchEmployees();
   const [treeHead, setTreeHead] = useState(null);
@@ -23,6 +23,7 @@ const App = () => {
     if (data) {
       console.log(data);
       setTreeHead(data);
+      setHeadTree(data);
     } 
     else if (error) {
       console.error(error);
