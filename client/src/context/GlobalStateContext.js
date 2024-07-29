@@ -1,8 +1,8 @@
 // GlobalStateProvider.js
 import React from 'react';
-import { NodesProvider } from '../context/NodeContext';
-import { FlowsProvider } from '../context/FlowsContext';
-import { SearchProvider } from '../context/SearchContext';
+import { NodesProvider } from './NodeContext';
+import { FlowsProvider } from './FlowsContext';
+import { SearchProvider } from './SearchContext';
 
 const GlobalStateProvider = ({ children }) => {
   return (
