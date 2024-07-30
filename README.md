@@ -44,3 +44,10 @@ The sidebar provides detailed information about the selected employee, including
 
 To start, this current example uses a CSV sheet with 30,000 employees, which is imported into a PostgreSQL database. The app then fetches the data and recursively builds a tree structure that is rendered in the application.
 
+## Next Steps
+
+1. **Authorization using Google Auth and GitHub**: Implement user authentication using Google and GitHub to ensure secure access to the application.
+2. **Allow Users to Create Multiple Organizations**: Enable users to create and manage multiple organizational trees within the app.
+3. **Directly Importing CSV Files and Building Trees**: Provide functionality for users to upload CSV files directly, which will then be used to build and visualize the organizational tree structure.
+
+
