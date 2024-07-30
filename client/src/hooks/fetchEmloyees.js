@@ -5,10 +5,12 @@ const useFetchEmployees = () =>{
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    const fetchEmployeeEndpoint = `${process.env.REACT_APP_API_URL}/allEmployees`;
+
     useEffect(()=>{
         const fetchEmployees = async () =>{
             try{
-                const response = await fetch('http://localhost:3001/allEmployees');
+                const response = await fetch(fetchEmployeeEndpoint);
                 if(!response.ok){
                     throw new Error('Network response was not ok');
                 }
