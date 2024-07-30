@@ -1,8 +1,8 @@
-# Organizational Planning Tool
+# BranchWorks
 
 ## Overview
 
-Welcome to the Organizational Planning Tool, a web application designed to help you manage your organization through a beautifully designed tree interface. Each employee is displayed as a card showing specific data such as name, job title, salary, and more. Additionally, it displays recursively computed values including the total cost (sum of all salaries of subordinates), number of children, total number of descendants, and other key metrics.
+Welcome to the BranchWorks, a web application designed to help you manage your organization through a intuitivedesigned tree interface. Each employee is displayed as a card showing specific data such as name, job title, salary, and more. Additionally, it displays recursively computed values including the total cost (sum of all salaries of subordinates), number of children, total number of descendants, and other key metrics.
 
 ![Demo GIF](./orgtree.gif)
 
